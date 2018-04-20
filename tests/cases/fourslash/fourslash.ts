@@ -43,6 +43,16 @@
 // TODO: figure out a better solution to the API exposure problem.
 
 declare module ts {
+    export type MapKey = string | number;
+    export interface Map<T> {
+        forEach(action: (value: T, key: string) => void): void;
+        get(key: MapKey): T;
+        has(key: MapKey): boolean;
+        set(key: MapKey, value: T): this;
+        delete(key: MapKey): boolean;
+        clear(): void;
+    }
+
     interface SymbolDisplayPart {
         text: string;
         kind: string;
@@ -52,13 +62,17 @@ declare module ts {
         None = 0,
         Block = 1,
         Smart = 2,
-    }  
+    }
 
     interface OutputFile {
         name: string;
         writeByteOrderMark: boolean;
         text: string;
-    }  
+    }
+}
+
+declare namespace ts {
+    function flatMap<T, U>(array: ReadonlyArray<T>, mapfn: (x: T, i: number) => U | ReadonlyArray<U> | undefined): U[];
 }
 
 declare namespace FourSlashInterface {
@@ -68,6 +82,7 @@ declare namespace FourSlashInterface {
         data?: any;
     }
     interface EditorOptions {
+        BaseIndentSize?: number,
         IndentSize: number;
         TabSize: number;
         NewLineCharacter: string;
@@ -81,13 +96,17 @@ declare namespace FourSlashInterface {
         InsertSpaceAfterFunctionKeywordForAnonymousFunctions: boolean;
         InsertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis: boolean;
         InsertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets: boolean;
+        InsertSpaceAfterOpeningAndBeforeClosingNonemptyBraces: boolean;
+        InsertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces: boolean;
+        InsertSpaceAfterTypeAssertion: boolean;
         PlaceOpenBraceOnNewLineForFunctions: boolean;
         PlaceOpenBraceOnNewLineForControlBlocks: boolean;
-        [s: string]: boolean | number | string;
+        insertSpaceBeforeTypeAnnotation: boolean;
+        [s: string]: boolean | number | string | undefined;
     }
     interface Range {
         fileName: string;
-        start: number;
+        pos: number;
         end: number;
         marker?: Marker;
     }
@@ -97,49 +116,101 @@ declare namespace FourSlashInterface {
     }
     class test_ {
         markers(): Marker[];
+        markerNames(): string[];
+        markerName(m: Marker): string;
         marker(name?: string): Marker;
         ranges(): Range[];
+        spans(): Array<{ start: number, length: number }>;
+        rangesByText(): ts.Map<Range[]>;
         markerByName(s: string): Marker;
+        symbolsInScope(range: Range): any[];
+        setTypesRegistry(map: { [key: string]: void }): void;
     }
     class goTo {
-        marker(name?: string): void;
+        marker(name?: string | Marker): void;
+        eachMarker(markers: ReadonlyArray<string>, action: (marker: Marker, index: number) => void): void;
+        eachMarker(action: (marker: Marker, index: number) => void): void;
+        rangeStart(range: Range): void;
+        eachRange(action: () => void): void;
         bof(): void;
         eof(): void;
-        definition(definitionIndex?: number): void;
-        type(definitionIndex?: number): void;
+        implementation(): void;
         position(position: number, fileIndex?: number): any;
         position(position: number, fileName?: string): any;
-        file(index: number, content?: string): any;
-        file(name: string, content?: string): any;
+        file(index: number, content?: string, scriptKindName?: string): any;
+        file(name: string, content?: string, scriptKindName?: string): any;
+        select(startMarker: string, endMarker: string): void;
+        selectRange(range: Range): void;
     }
     class verifyNegatable {
         private negative;
         not: verifyNegatable;
+        allowedClassElementKeywords: string[];
+        allowedConstructorParameterKeywords: string[];
         constructor(negative?: boolean);
-        memberListContains(symbol: string, text?: string, documenation?: string, kind?: string): void;
-        memberListCount(expectedCount: number): void;
-        completionListContains(symbol: string, text?: string, documentation?: string, kind?: string): void;
+        completionListCount(expectedCount: number): void;
+        completionListContains(
+            entryId: string | { name: string, source?: string },
+            text?: string,
+            documentation?: string,
+            kind?: string | { kind?: string, kindModifiers?: string },
+            spanIndex?: number,
+            hasAction?: boolean,
+            options?: UserPreferences & {
+                sourceDisplay?: string,
+                isRecommended?: true,
+                insertText?: string,
+                replacementSpan?: Range,
+            },
+        ): void;
         completionListItemsCountIsGreaterThan(count: number): void;
         completionListIsEmpty(): void;
+        completionListContainsClassElementKeywords(): void;
+        completionListContainsConstructorParameterKeywords(): void;
         completionListAllowsNewIdentifier(): void;
-        memberListIsEmpty(): void;
-        referencesCountIs(count: number): void;
-        referencesAtPositionContains(range: Range, isWriteAccess?: boolean): void;
         signatureHelpPresent(): void;
         errorExistsBetweenMarkers(startMarker: string, endMarker: string): void;
         errorExistsAfterMarker(markerName?: string): void;
         errorExistsBeforeMarker(markerName?: string): void;
-        quickInfoIs(expectedText?: string, expectedDocumentation?: string): void;
         quickInfoExists(): void;
-        definitionCountIs(expectedCount: number): void;
         typeDefinitionCountIs(expectedCount: number): void;
-        definitionLocationExists(): void;
-        verifyDefinitionsName(name: string, containerName: string): void;
+        implementationListIsEmpty(): void;
+        isValidBraceCompletionAtPosition(openingBrace?: string): void;
+        isInCommentAtPosition(onlyMultiLineDiverges?: boolean): void;
+        codeFix(options: {
+            description: string,
+            newFileContent?: string,
+            newRangeContent?: string,
+            errorCode?: number,
+            index?: number,
+            preferences?: UserPreferences,
+        });
+        codeFixAvailable(options?: Array<{ description: string, actions?: Array<{ type: string, data: {} }>, commands?: {}[] }>): void;
+        applicableRefactorAvailableAtMarker(markerName: string): void;
+        codeFixDiagnosticsAvailableAtMarkers(markerNames: string[], diagnosticCode?: number): void;
+        applicableRefactorAvailableForRange(): void;
+
+        refactorAvailable(name: string, actionName?: string): void;
+        refactor(options: {
+            name: string;
+            actionName: string;
+            refactors: any[];
+        }): void;
     }
     class verify extends verifyNegatable {
+        assertHasRanges(ranges: Range[]): void;
         caretAtMarker(markerName?: string): void;
+        completionsAt(markerName: string | ReadonlyArray<string>, completions: ReadonlyArray<string | { name: string, insertText?: string, replacementSpan?: Range }>, options?: CompletionsAtOptions): void;
+        applyCodeActionFromCompletion(markerName: string, options: {
+            name: string,
+            source?: string,
+            description: string,
+            newFileContent?: string,
+            newRangeContent?: string,
+            preferences?: UserPreferences,
+        });
         indentationIs(numberOfSpaces: number): void;
-        indentationAtPositionIs(fileName: string, position: number, numberOfSpaces: number, indentStyle?: ts.IndentStyle): void;
+        indentationAtPositionIs(fileName: string, position: number, numberOfSpaces: number, indentStyle?: ts.IndentStyle, baseIndentSize?: number): void;
         textAtCaretIs(text: string): void;
         /**
          * Compiles the current file and evaluates 'expr' in a context containing
@@ -149,37 +220,93 @@ declare namespace FourSlashInterface {
         eval(expr: string, value: any): void;
         currentLineContentIs(text: string): void;
         currentFileContentIs(text: string): void;
+        /** Verifies that goToDefinition at the current position would take you to `endMarker`. */
+        goToDefinitionIs(endMarkers: string | string[]): void;
+        goToDefinitionName(name: string, containerName: string): void;
+        /**
+         * `verify.goToDefinition("a", "b");` verifies that go-to-definition at marker "a" takes you to marker "b".
+         * `verify.goToDefinition(["a", "aa"], "b");` verifies that markers "a" and "aa" have the same definition "b".
+         * `verify.goToDefinition("a", ["b", "bb"]);` verifies that "a" has multiple definitions available.
+         */
+        goToDefinition(startMarkerNames: string | string[], endMarkerNames: string | string[]): void;
+        goToDefinition(startMarkerNames: string | string[], endMarkerNames: string | string[], range: Range): void;
+        /** Performs `goToDefinition` for each pair. */
+        goToDefinition(startsAndEnds: [string | string[], string | string[]][]): void;
+        /** Performs `goToDefinition` on each key and value. */
+        goToDefinition(startsAndEnds: { [startMarkerName: string]: string | string[] }): void;
+        /** Verifies goToDefinition for each `${markerName}Reference` -> `${markerName}Definition` */
+        goToDefinitionForMarkers(...markerNames: string[]): void;
+        goToType(startsAndEnds: { [startMarkerName: string]: string | string[] }): void;
+        goToType(startMarkerNames: string | string[], endMarkerNames: string | string[]): void;
         verifyGetEmitOutputForCurrentFile(expected: string): void;
         verifyGetEmitOutputContentsForCurrentFile(expected: ts.OutputFile[]): void;
+        noReferences(markerNameOrRange?: string | Range): void;
+        symbolAtLocation(startRange: Range, ...declarationRanges: Range[]): void;
+        typeOfSymbolAtLocation(range: Range, symbol: any, expected: string): void;
+        /**
+         * @deprecated, prefer 'referenceGroups'
+         * Like `referencesAre`, but goes to `start` first.
+         * `start` should be included in `references`.
+         */
+        referencesOf(start: Range, references: Range[]): void;
+        /**
+         * For each of starts, asserts the ranges that are referenced from there.
+         * This uses the 'findReferences' command instead of 'getReferencesAtPosition', so references are grouped by their definition.
+         */
+        referenceGroups(starts: string | string[] | Range | Range[], parts: Array<{ definition: ReferencesDefinition, ranges: Range[] }>): void;
+        singleReferenceGroup(definition: ReferencesDefinition, ranges?: Range[]): void;
+        rangesAreOccurrences(isWriteAccess?: boolean): void;
+        rangesWithSameTextAreRenameLocations(): void;
+        rangesAreRenameLocations(options?: Range[] | { findInStrings?: boolean, findInComments?: boolean, ranges?: Range[] });
+        /**
+         * Performs `referencesOf` for every range on the whole set.
+         * If `ranges` is omitted, this is `test.ranges()`.
+         */
+        rangesReferenceEachOther(ranges?: Range[]): void;
+        findReferencesDefinitionDisplayPartsAtCaretAre(expected: ts.SymbolDisplayPart[]): void;
         currentParameterHelpArgumentNameIs(name: string): void;
         currentParameterSpanIs(parameter: string): void;
         currentParameterHelpArgumentDocCommentIs(docComment: string): void;
         currentSignatureHelpDocCommentIs(docComment: string): void;
+        currentSignatureHelpTagsAre(tags: ts.JSDocTagInfo[]): void;
         signatureHelpCountIs(expected: number): void;
         signatureHelpArgumentCountIs(expected: number): void;
+        signatureHelpCurrentArgumentListIsVariadic(expected: boolean);
         currentSignatureParameterCountIs(expected: number): void;
         currentSignatureTypeParameterCountIs(expected: number): void;
         currentSignatureHelpIs(expected: string): void;
+        // Checks that there are no compile errors.
+        noErrors(): void;
         numberOfErrorsInCurrentFile(expected: number): void;
         baselineCurrentFileBreakpointLocations(): void;
         baselineCurrentFileNameOrDottedNameSpans(): void;
-        baselineGetEmitOutput(): void;
+        baselineGetEmitOutput(insertResultsIntoVfs?: boolean): void;
+        baselineQuickInfo(): void;
         nameOrDottedNameSpanTextIs(text: string): void;
-        outliningSpansInCurrentFile(spans: TextSpan[]): void;
+        outliningSpansInCurrentFile(spans: Range[]): void;
         todoCommentsInCurrentFile(descriptors: string[]): void;
         matchingBracePositionInCurrentFile(bracePosition: number, expectedMatchPosition: number): void;
         noMatchingBracePositionInCurrentFile(bracePosition: number): void;
-        DocCommentTemplate(expectedText: string, expectedOffset: number, empty?: boolean): void;
-        noDocCommentTemplate(): void;
-        getScriptLexicalStructureListCount(count: number): void;
-        getScriptLexicalStructureListContains(name: string, kind: string, fileName?: string, parentName?: string, isAdditionalSpan?: boolean, markerPosition?: number): void;
-        navigationItemsListCount(count: number, searchValue: string, matchKind?: string): void;
+        docCommentTemplateAt(markerName: string | FourSlashInterface.Marker, expectedOffset: number, expectedText: string): void;
+        noDocCommentTemplateAt(markerName: string | FourSlashInterface.Marker): void;
+        rangeAfterCodeFix(expectedText: string, includeWhiteSpace?: boolean, errorCode?: number, index?: number): void;
+        codeFixAll(options: { fixId: string, fixAllDescription: string, newFileContent: string, commands?: {}[] }): void;
+        fileAfterApplyingRefactorAtMarker(markerName: string, expectedContent: string, refactorNameToApply: string, actionName: string, formattingOptions?: FormatCodeOptions): void;
+        rangeIs(expectedText: string, includeWhiteSpace?: boolean): void;
+        fileAfterApplyingRefactorAtMarker(markerName: string, expectedContent: string, refactorNameToApply: string, formattingOptions?: FormatCodeOptions): void;
+        getAndApplyCodeFix(errorCode?: number, index?: number): void;
+        importFixAtPosition(expectedTextArray: string[], errorCode?: number, options?: UserPreferences): void;
+
+        navigationBar(json: any, options?: { checkSpans?: boolean }): void;
+        navigationTree(json: any, options?: { checkSpans?: boolean }): void;
+        navigationItemsListCount(count: number, searchValue: string, matchKind?: string, fileName?: string): void;
         navigationItemsListContains(name: string, kind: string, searchValue: string, matchKind: string, fileName?: string, parentName?: string): void;
         occurrencesAtPositionContains(range: Range, isWriteAccess?: boolean): void;
         occurrencesAtPositionCount(expectedCount: number): void;
-        documentHighlightsAtPositionContains(range: Range, fileNamesToSearch: string[], kind?: string): void;
-        documentHighlightsAtPositionCount(expectedCount: number, fileNamesToSearch: string[]): void;
-        completionEntryDetailIs(entryName: string, text: string, documentation?: string, kind?: string): void;
+        rangesAreDocumentHighlights(ranges?: Range[], options?: VerifyDocumentHighlightsOptions): void;
+        rangesWithSameTextAreDocumentHighlights(): void;
+        documentHighlightsOf(startRange: Range, ranges: Range[], options?: VerifyDocumentHighlightsOptions): void;
+        completionEntryDetailIs(entryName: string, text: string, documentation?: string, kind?: string, tags?: ts.JSDocTagInfo[]): void;
         /**
          * This method *requires* a contiguous, complete, and ordered stream of classifications for a file.
          */
@@ -197,14 +324,26 @@ declare namespace FourSlashInterface {
         }[]): void;
         renameInfoSucceeded(displayName?: string, fullDisplayName?: string, kind?: string, kindModifiers?: string): void;
         renameInfoFailed(message?: string): void;
-        renameLocations(findInStrings: boolean, findInComments: boolean): void;
+        renameLocations(startRanges: Range | Range[], options: Range[] | { findInStrings?: boolean, findInComments?: boolean, ranges: Range[] }): void;
+
+        /** Verify the quick info available at the current marker. */
+        quickInfoIs(expectedText: string, expectedDocumentation?: string): void;
+        /** Goto a marker and call `quickInfoIs`. */
+        quickInfoAt(markerName: string, expectedText?: string, expectedDocumentation?: string): void;
+        /**
+         * Call `quickInfoAt` for each pair in the object.
+         * (If the value is an array, it is [expectedText, expectedDocumentation].)
+         */
+        quickInfos(namesAndTexts: { [name: string]: string | [string, string] }): void;
         verifyQuickInfoDisplayParts(kind: string, kindModifiers: string, textSpan: {
             start: number;
             length: number;
-        }, displayParts: ts.SymbolDisplayPart[], documentation: ts.SymbolDisplayPart[]): void;
-        getSyntacticDiagnostics(expected: string): void;
-        getSemanticDiagnostics(expected: string): void;
+        }, displayParts: ts.SymbolDisplayPart[], documentation: ts.SymbolDisplayPart[], tags: { name: string, text?: string }[]): void;
+        getSyntacticDiagnostics(expected: ReadonlyArray<Diagnostic>): void;
+        getSemanticDiagnostics(expected: ReadonlyArray<Diagnostic>): void;
+        getSuggestionDiagnostics(expected: ReadonlyArray<Diagnostic>): void;
         ProjectInfo(expected: string[]): void;
+        allRangesAppearInImplementationList(markerName: string): void;
     }
     class edit {
         backspace(count?: number): void;
@@ -218,6 +357,8 @@ declare namespace FourSlashInterface {
         moveLeft(count?: number): void;
         enableFormatting(): void;
         disableFormatting(): void;
+
+        applyRefactor(options: { refactorName: string, actionName: string, actionDescription: string, newContent: string }): void;
     }
     class debug {
         printCurrentParameterHelp(): void;
@@ -226,12 +367,13 @@ declare namespace FourSlashInterface {
         printCurrentFileStateWithoutCaret(): void;
         printCurrentQuickInfo(): void;
         printCurrentSignatureHelp(): void;
-        printMemberListMembers(): void;
-        printCompletionListMembers(): void;
+        printCompletionListMembers(options?: { includeExternalModuleExports: boolean }): void;
+        printAvailableCodeFixes(): void;
         printBreakpointLocation(pos: number): void;
         printBreakpointAtCurrentLocation(): void;
         printNameOrDottedNameSpans(pos: number): void;
         printErrorList(): void;
+        printNavigationBar(): void;
         printNavigationItems(searchValue?: string): void;
         printScriptLexicalStructureItems(): void;
         printReferences(): void;
@@ -242,9 +384,8 @@ declare namespace FourSlashInterface {
         copyFormatOptions(): FormatCodeOptions;
         setFormatOptions(options: FormatCodeOptions): any;
         selection(startMarker: string, endMarker: string): void;
-        setOption(name: string, value: number): any;
-        setOption(name: string, value: string): any;
-        setOption(name: string, value: boolean): any;
+        onType(posMarker: string, key: string): void;
+        setOption(name: keyof FormatCodeOptions, value: number | string | boolean): void;
     }
     class cancellation {
         resetCancelled(): void;
@@ -336,6 +477,60 @@ declare namespace FourSlashInterface {
             text: string;
             textSpan?: TextSpan;
         };
+        function jsxOpenTagName(text: string, position?: number): {
+            classificationType: string;
+            text: string;
+            textSpan?: TextSpan;
+        };
+        function jsxCloseTagName(text: string, position?: number): {
+            classificationType: string;
+            text: string;
+            textSpan?: TextSpan;
+        };
+        function jsxSelfClosingTagName(text: string, position?: number): {
+            classificationType: string;
+            text: string;
+            textSpan?: TextSpan;
+        };
+        function jsxAttribute(text: string, position?: number): {
+            classificationType: string;
+            text: string;
+            textSpan?: TextSpan;
+        };
+        function jsxText(text: string, position?: number): {
+            classificationType: string;
+            text: string;
+            textSpan?: TextSpan;
+        };
+        function jsxAttributeStringLiteralValue(text: string, position?: number): {
+            classificationType: string;
+            text: string;
+            textSpan?: TextSpan;
+        };
+    }
+
+    type ReferencesDefinition = string | {
+        text: string;
+        range: Range;
+    }
+    interface Diagnostic {
+        message: string;
+        /** @default `test.ranges()[0]` */
+        range?: Range;
+        code: number;
+        unused?: true;
+    }
+    interface VerifyDocumentHighlightsOptions {
+        filesToSearch?: ReadonlyArray<string>;
+    }
+    interface UserPreferences {
+        quotePreference?: "double" | "single";
+        includeCompletionsForModuleExports?: boolean;
+        includeInsertTextCompletions?: boolean;
+        importModuleSpecifierPreference?: "relative" | "non-relative";
+    }
+    interface CompletionsAtOptions extends UserPreferences {
+        isNewIdentifierLocation?: boolean;
     }
 }
 declare function verifyOperationIsCancelled(f: any): void;

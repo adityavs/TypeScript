@@ -1,37 +1,43 @@
 /// <reference path="..\..\src\compiler\sys.ts" />
 /// <reference path="..\..\src\harness\harness.ts" />
+/// <reference path="..\..\src\harness\harnessLanguageService.ts" />
 /// <reference path="..\..\src\harness\runnerbase.ts" />
-/* tslint:disable:no-null */
+/// <reference path="..\..\src\harness\typeWriter.ts" />
 
 interface FileInformation {
-    contents: string;
+    contents?: string;
+    contentsPath?: string;
     codepage: number;
+    bom?: string;
 }
 
 interface FindFileResult {
-
 }
 
-interface IOLog {
+interface IoLogFile {
+    path: string;
+    codepage: number;
+    result?: FileInformation;
+}
+
+interface IoLog {
     timestamp: string;
     arguments: string[];
     executingPath: string;
     currentDirectory: string;
     useCustomLibraryFile?: boolean;
-    filesRead: {
-        path: string;
-        codepage: number;
-        result?: FileInformation;
-    }[];
+    filesRead: IoLogFile[];
     filesWritten: {
         path: string;
-        contents: string;
+        contents?: string;
+        contentsPath?: string;
         bom: boolean;
     }[];
     filesDeleted: string[];
     filesAppended: {
         path: string;
-        contents: string;
+        contents?: string;
+        contentsPath?: string;
     }[];
     fileExists: {
         path: string;
@@ -62,24 +68,28 @@ interface IOLog {
     }[];
     directoriesRead: {
         path: string,
-        extension: string,
-        exclude: string[],
-        result: string[]
+        extensions: ReadonlyArray<string>,
+        exclude: ReadonlyArray<string>,
+        include: ReadonlyArray<string>,
+        depth: number,
+        result: ReadonlyArray<string>,
     }[];
+    useCaseSensitiveFileNames?: boolean;
 }
 
 interface PlaybackControl {
     startReplayFromFile(logFileName: string): void;
     startReplayFromString(logContents: string): void;
-    startReplayFromData(log: IOLog): void;
+    startReplayFromData(log: IoLog): void;
     endReplay(): void;
     startRecord(logFileName: string): void;
     endRecord(): void;
 }
 
 namespace Playback {
-    let recordLog: IOLog = undefined;
-    let replayLog: IOLog = undefined;
+    let recordLog: IoLog;
+    let replayLog: IoLog;
+    let replayFilesRead: ts.Map<IoLogFile> | undefined;
     let recordLogFileNameBase = "";
 
     interface Memoized<T> {
@@ -94,17 +104,17 @@ namespace Playback {
             return lookup[s] = func(s);
         });
         run.reset = () => {
-            lookup = null;
+            lookup = undefined;
         };
 
         return run;
     }
 
-    export interface PlaybackIO extends Harness.IO, PlaybackControl { }
+    export interface PlaybackIO extends Harness.Io, PlaybackControl { }
 
     export interface PlaybackSystem extends ts.System, PlaybackControl { }
 
-    function createEmptyLog(): IOLog {
+    function createEmptyLog(): IoLog {
         return {
             timestamp: (new Date()).toString(),
             arguments: [],
@@ -124,9 +134,84 @@ namespace Playback {
         };
     }
 
+    export function newStyleLogIntoOldStyleLog(log: IoLog, host: ts.System | Harness.Io, baseName: string) {
+        for (const file of log.filesAppended) {
+            if (file.contentsPath) {
+                file.contents = host.readFile(ts.combinePaths(baseName, file.contentsPath));
+                delete file.contentsPath;
+            }
+        }
+        for (const file of log.filesWritten) {
+            if (file.contentsPath) {
+                file.contents = host.readFile(ts.combinePaths(baseName, file.contentsPath));
+                delete file.contentsPath;
+            }
+        }
+        for (const file of log.filesRead) {
+            if (file.result.contentsPath) {
+                // `readFile` strips away a BOM (and actually reinerprets the file contents according to the correct encoding)
+                // - but this has the unfortunate sideeffect of removing the BOM from any outputs based on the file, so we readd it here.
+                file.result.contents = (file.result.bom || "") + host.readFile(ts.combinePaths(baseName, file.result.contentsPath));
+                delete file.result.contentsPath;
+            }
+        }
+        return log;
+    }
+
+    const canonicalizeForHarness = ts.createGetCanonicalFileName(/*caseSensitive*/ false); // This is done so tests work on windows _and_ linux
+    function sanitizeTestFilePath(name: string) {
+        const path = ts.toPath(ts.normalizeSlashes(name.replace(/[\^<>:"|?*%]/g, "_")).replace(/\.\.\//g, "__dotdot/"), "", canonicalizeForHarness);
+        if (ts.startsWith(path, "/")) {
+            return path.substring(1);
+        }
+        return path;
+    }
+
+    export function oldStyleLogIntoNewStyleLog(log: IoLog, writeFile: typeof Harness.IO.writeFile, baseTestName: string) {
+        if (log.filesAppended) {
+            for (const file of log.filesAppended) {
+                if (file.contents !== undefined) {
+                    file.contentsPath = ts.combinePaths("appended", sanitizeTestFilePath(file.path));
+                    writeFile(ts.combinePaths(baseTestName, file.contentsPath), file.contents);
+                    delete file.contents;
+                }
+            }
+        }
+        if (log.filesWritten) {
+            for (const file of log.filesWritten) {
+                if (file.contents !== undefined) {
+                    file.contentsPath = ts.combinePaths("written", sanitizeTestFilePath(file.path));
+                    writeFile(ts.combinePaths(baseTestName, file.contentsPath), file.contents);
+                    delete file.contents;
+                }
+            }
+        }
+        if (log.filesRead) {
+            for (const file of log.filesRead) {
+                const { contents } = file.result;
+                if (contents !== undefined) {
+                    file.result.contentsPath = ts.combinePaths("read", sanitizeTestFilePath(file.path));
+                    writeFile(ts.combinePaths(baseTestName, file.result.contentsPath), contents);
+                    const len = contents.length;
+                    if (len >= 2 && contents.charCodeAt(0) === 0xfeff) {
+                        file.result.bom = "\ufeff";
+                    }
+                    if (len >= 2 && contents.charCodeAt(0) === 0xfffe) {
+                        file.result.bom = "\ufffe";
+                    }
+                    if (len >= 3 && contents.charCodeAt(0) === 0xefbb && contents.charCodeAt(1) === 0xbf) {
+                        file.result.bom = "\uefbb\xbf";
+                    }
+                    delete file.result.contents;
+                }
+            }
+        }
+        return log;
+    }
+
     function initWrapper(wrapper: PlaybackSystem, underlying: ts.System): void;
-    function initWrapper(wrapper: PlaybackIO, underlying: Harness.IO): void;
-    function initWrapper(wrapper: PlaybackSystem | PlaybackIO, underlying: ts.System | Harness.IO): void {
+    function initWrapper(wrapper: PlaybackIO, underlying: Harness.Io): void;
+    function initWrapper(wrapper: PlaybackSystem | PlaybackIO, underlying: ts.System | Harness.Io): void {
         ts.forEach(Object.keys(underlying), prop => {
             (<any>wrapper)[prop] = (<any>underlying)[prop];
         });
@@ -136,20 +221,25 @@ namespace Playback {
         };
         wrapper.startReplayFromData = log => {
             replayLog = log;
-            // Remove non-found files from the log (shouldn't really need them, but we still record them for diganostic purposes)
+            // Remove non-found files from the log (shouldn't really need them, but we still record them for diagnostic purposes)
             replayLog.filesRead = replayLog.filesRead.filter(f => f.result.contents !== undefined);
+            replayFilesRead = ts.createMap();
+            for (const file of replayLog.filesRead) {
+                replayFilesRead.set(ts.normalizeSlashes(file.path).toLowerCase(), file);
+            }
         };
 
         wrapper.endReplay = () => {
             replayLog = undefined;
+            replayFilesRead = undefined;
         };
 
         wrapper.startRecord = (fileNameBase) => {
             recordLogFileNameBase = fileNameBase;
             recordLog = createEmptyLog();
-
+            recordLog.useCaseSensitiveFileNames = typeof underlying.useCaseSensitiveFileNames === "function" ? underlying.useCaseSensitiveFileNames() : underlying.useCaseSensitiveFileNames;
             if (typeof underlying.args !== "function") {
-                recordLog.arguments = <string[]>underlying.args;
+                recordLog.arguments = underlying.args;
             }
         };
 
@@ -159,18 +249,38 @@ namespace Playback {
         wrapper.endRecord = () => {
             if (recordLog !== undefined) {
                 let i = 0;
-                const fn = () => recordLogFileNameBase + i + ".json";
-                while (underlying.fileExists(fn())) i++;
-                underlying.writeFile(fn(), JSON.stringify(recordLog));
+                const getBase = () => recordLogFileNameBase + i;
+                while (underlying.fileExists(ts.combinePaths(getBase(), "test.json"))) i++;
+                const newLog = oldStyleLogIntoNewStyleLog(recordLog, (path, str) => underlying.writeFile(path, str), getBase());
+                underlying.writeFile(ts.combinePaths(getBase(), "test.json"), JSON.stringify(newLog, null, 4)); // tslint:disable-line:no-null-keyword
+                const syntheticTsconfig = generateTsconfig(newLog);
+                if (syntheticTsconfig) {
+                    underlying.writeFile(ts.combinePaths(getBase(), "tsconfig.json"), JSON.stringify(syntheticTsconfig, null, 4)); // tslint:disable-line:no-null-keyword
+                }
                 recordLog = undefined;
             }
         };
+
+        function generateTsconfig(newLog: IoLog): undefined | { compilerOptions: ts.CompilerOptions, files: string[] } {
+            if (newLog.filesRead.some(file => /tsconfig.+json$/.test(file.path))) {
+                return;
+            }
+            const files = [];
+            for (const file of newLog.filesRead) {
+                if (file.result.contentsPath &&
+                    Harness.isDefaultLibraryFile(file.result.contentsPath) &&
+                    /\.[tj]s$/.test(file.result.contentsPath)) {
+                    files.push(file.result.contentsPath);
+                }
+            }
+            return { compilerOptions: ts.parseCommandLine(newLog.arguments).options, files };
+        }
 
         wrapper.fileExists = recordReplay(wrapper.fileExists, underlying)(
             path => callAndRecord(underlying.fileExists(path), recordLog.fileExists, { path }),
             memoize(path => {
                 // If we read from the file, it must exist
-                if (findResultByPath(wrapper, replayLog.filesRead, path, null) !== null) {
+                if (findFileByPath(path, /*throwFileNotFoundError*/ false)) {
                     return true;
                 }
                 else {
@@ -208,26 +318,36 @@ namespace Playback {
             memoize(path => findResultByFields(replayLog.pathsResolved, { path }, !ts.isRootedDiskPath(ts.normalizeSlashes(path)) && replayLog.currentDirectory ? replayLog.currentDirectory + "/" + path : ts.normalizeSlashes(path))));
 
         wrapper.readFile = recordReplay(wrapper.readFile, underlying)(
-            path => {
+            (path: string) => {
                 const result = underlying.readFile(path);
                 const logEntry = { path, codepage: 0, result: { contents: result, codepage: 0 } };
                 recordLog.filesRead.push(logEntry);
                 return result;
             },
-            memoize(path => findResultByPath(wrapper, replayLog.filesRead, path).contents));
+            memoize(path => findFileByPath(path, /*throwFileNotFoundError*/ true).contents));
 
         wrapper.readDirectory = recordReplay(wrapper.readDirectory, underlying)(
-            (path, extension, exclude) => {
-                const result = (<ts.System>underlying).readDirectory(path, extension, exclude);
-                const logEntry = { path, extension, exclude, result };
-                recordLog.directoriesRead.push(logEntry);
+            (path, extensions, exclude, include, depth) => {
+                const result = (<ts.System>underlying).readDirectory(path, extensions, exclude, include, depth);
+                recordLog.directoriesRead.push({ path, extensions, exclude, include, depth, result });
                 return result;
             },
-            (path, extension, exclude) => findResultByPath(wrapper, replayLog.directoriesRead.filter(d => d.extension === extension && ts.arrayIsEqualTo(d.exclude, exclude)), path));
+            path => {
+                // Because extensions is an array of all allowed extension, we will want to merge each of the replayLog.directoriesRead into one
+                // if each of the directoriesRead has matched path with the given path (directory with same path but different extension will considered
+                // different entry).
+                // TODO (yuisu): We can certainly remove these once we recapture the RWC using new API
+                const normalizedPath = ts.normalizePath(path).toLowerCase();
+                return ts.flatMap(replayLog.directoriesRead, directory => {
+                    if (ts.normalizeSlashes(directory.path).toLowerCase() === normalizedPath) {
+                        return directory.result;
+                    }
+                });
+            });
 
         wrapper.writeFile = recordReplay(wrapper.writeFile, underlying)(
-            (path, contents) => callAndRecord(underlying.writeFile(path, contents), recordLog.filesWritten, { path, contents, bom: false }),
-            (path, contents) => noOpReplay("writeFile"));
+            (path: string, contents: string) => callAndRecord(underlying.writeFile(path, contents), recordLog.filesWritten, { path, contents, bom: false }),
+            () => noOpReplay("writeFile"));
 
         wrapper.exit = (exitCode) => {
             if (recordLog !== undefined) {
@@ -235,10 +355,18 @@ namespace Playback {
             }
             underlying.exit(exitCode);
         };
+
+        wrapper.useCaseSensitiveFileNames = () => {
+            if (replayLog !== undefined) {
+                return !!replayLog.useCaseSensitiveFileNames;
+            }
+            return typeof underlying.useCaseSensitiveFileNames === "function" ? underlying.useCaseSensitiveFileNames() : underlying.useCaseSensitiveFileNames;
+        };
     }
 
-    function recordReplay<T extends Function>(original: T, underlying: any) {
+    function recordReplay<T extends ts.AnyFunction>(original: T, underlying: any) {
         function createWrapper(record: T, replay: T): T {
+            // tslint:disable-next-line only-arrow-functions
             return <any>(function () {
                 if (replayLog !== undefined) {
                     return replay.apply(undefined, arguments);
@@ -278,67 +406,42 @@ namespace Playback {
         return results[0].result;
     }
 
-    function findResultByPath<T>(wrapper: { resolvePath(s: string): string }, logArray: { path: string; result?: T }[], expectedPath: string, defaultValue?: T): T {
+    function findFileByPath(expectedPath: string, throwFileNotFoundError: boolean): FileInformation {
         const normalizedName = ts.normalizePath(expectedPath).toLowerCase();
         // Try to find the result through normal fileName
-        for (let i = 0; i < logArray.length; i++) {
-            if (ts.normalizeSlashes(logArray[i].path).toLowerCase() === normalizedName) {
-                return logArray[i].result;
-            }
-        }
-        // Fallback, try to resolve the target paths as well
-        if (replayLog.pathsResolved.length > 0) {
-            const normalizedResolvedName = wrapper.resolvePath(expectedPath).toLowerCase();
-            for (let i = 0; i < logArray.length; i++) {
-                if (wrapper.resolvePath(logArray[i].path).toLowerCase() === normalizedResolvedName) {
-                    return logArray[i].result;
-                }
-            }
+        const result = replayFilesRead.get(normalizedName);
+        if (result) {
+            return result.result;
         }
 
         // If we got here, we didn't find a match
-        if (defaultValue === undefined) {
+        if (throwFileNotFoundError) {
             throw new Error("No matching result in log array for path: " + expectedPath);
         }
         else {
-            return defaultValue;
+            return undefined;
         }
     }
 
-    const pathEquivCache: any = {};
-    function pathsAreEquivalent(left: string, right: string, wrapper: { resolvePath(s: string): string }) {
-        const key = left + "-~~-" + right;
-        function areSame(a: string, b: string) {
-            return ts.normalizeSlashes(a).toLowerCase() === ts.normalizeSlashes(b).toLowerCase();
-        }
-        function check() {
-            if (Harness.Path.getFileName(left).toLowerCase() === Harness.Path.getFileName(right).toLowerCase()) {
-                return areSame(left, right) || areSame(wrapper.resolvePath(left), right) || areSame(left, wrapper.resolvePath(right)) || areSame(wrapper.resolvePath(left), wrapper.resolvePath(right));
-            }
-        }
-        if (pathEquivCache.hasOwnProperty(key)) {
-            return pathEquivCache[key];
-        }
-        else {
-            return pathEquivCache[key] = check();
-        }
-    }
-
-    function noOpReplay(name: string) {
+    function noOpReplay(_name: string) {
         // console.log("Swallowed write operation during replay: " + name);
     }
 
-    export function wrapIO(underlying: Harness.IO): PlaybackIO {
+    export function wrapIO(underlying: Harness.Io): PlaybackIO {
         const wrapper: PlaybackIO = <any>{};
         initWrapper(wrapper, underlying);
 
-        wrapper.directoryName = (path): string => { throw new Error("NotSupported"); };
-        wrapper.createDirectory = (path): void => { throw new Error("NotSupported"); };
-        wrapper.directoryExists = (path): boolean => { throw new Error("NotSupported"); };
-        wrapper.deleteFile = (path): void => { throw new Error("NotSupported"); };
-        wrapper.listFiles = (path, filter, options): string[] => { throw new Error("NotSupported"); };
+        wrapper.directoryName = notSupported;
+        wrapper.createDirectory = notSupported;
+        wrapper.directoryExists = notSupported;
+        wrapper.deleteFile = notSupported;
+        wrapper.listFiles = notSupported;
 
         return wrapper;
+
+        function notSupported(): never {
+            throw new Error("NotSupported");
+        }
     }
 
     export function wrapSystem(underlying: ts.System): PlaybackSystem {

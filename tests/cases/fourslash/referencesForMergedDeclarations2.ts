@@ -6,16 +6,13 @@
 ////
 ////function ATest() { }
 ////
-////import /*definition*/alias = ATest;
+////import [|{| "isWriteAccess": true, "isDefinition": true |}alias|] = ATest; // definition
 ////
-////var a: /*namespace*/alias.Bar;
-/////*value*/alias.call(this);
+////var a: [|alias|].Bar; // namespace
+////[|alias|].call(this); // value
 
-goTo.marker("definition");
-verify.referencesCountIs(3);
-
-goTo.marker("namespace");
-verify.referencesCountIs(3);
-
-goTo.marker("value");
-verify.referencesCountIs(3);
+verify.singleReferenceGroup([
+    "(alias) function alias(): void",
+    "(alias) namespace alias",
+    "import alias = ATest"
+].join("\n"));

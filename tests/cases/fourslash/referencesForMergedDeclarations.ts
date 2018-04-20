@@ -1,21 +1,20 @@
 /// <reference path='fourslash.ts'/>
 
-////interface /*type1*/Foo {
+////interface [|{| "isWriteAccess": true, "isDefinition": true |}Foo|] {
 ////}
 ////
-////module /*namespace1*/Foo {
+////module [|{| "isWriteAccess": true, "isDefinition": true |}Foo|] {
 ////    export interface Bar { }
 ////}
 ////
-////function /*value1*/Foo(): void {
+////function [|{| "isWriteAccess": true, "isDefinition": true |}Foo|](): void {
 ////}
 ////
-////var f1: /*namespace2*/Foo.Bar;
-////var f2: /*type2*/Foo;
-/////*value2*/Foo.bind(this);
+////var f1: [|Foo|].Bar;
+////var f2: [|Foo|];
+////[|Foo|].bind(this);
 
-
-test.markers().forEach(m => {
-    goTo.position(m.position, m.fileName);
-    verify.referencesCountIs(2);
-});
+const [type1, namespace1, value1, namespace2, type2, value2] = test.ranges();
+verify.singleReferenceGroup("interface Foo\nnamespace Foo\nfunction Foo(): void", [type1, type2]);
+verify.singleReferenceGroup("namespace Foo\nfunction Foo(): void", [namespace1, namespace2]);
+verify.singleReferenceGroup("namespace Foo\nfunction Foo(): void", [value1, value2]);

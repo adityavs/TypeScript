@@ -1,5 +1,4 @@
 //// [stringLiteralTypesAsTags01.ts]
-
 type Kind = "A" | "B"
 
 interface Entity {
@@ -20,7 +19,7 @@ function hasKind(entity: Entity, kind: "A"): entity is A;
 function hasKind(entity: Entity, kind: "B"): entity is B;
 function hasKind(entity: Entity, kind: Kind): entity is Entity;
 function hasKind(entity: Entity, kind: Kind): boolean {
-    return kind === is;
+    return entity.kind === kind;
 }
 
 let x: A = {
@@ -44,7 +43,7 @@ else {
 
 //// [stringLiteralTypesAsTags01.js]
 function hasKind(entity, kind) {
-    return kind === is;
+    return entity.kind === kind;
 }
 var x = {
     kind: "A",

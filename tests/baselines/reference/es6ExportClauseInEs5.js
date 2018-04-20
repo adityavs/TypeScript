@@ -1,5 +1,4 @@
 //// [server.ts]
-
 class c {
 }
 interface i {
@@ -17,11 +16,13 @@ export { uninstantiated };
 export { x };
 
 //// [server.js]
-var c = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var c = /** @class */ (function () {
     function c() {
     }
     return c;
-})();
+}());
 exports.c = c;
 exports.c2 = c;
 var m;

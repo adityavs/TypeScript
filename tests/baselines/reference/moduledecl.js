@@ -1,5 +1,4 @@
 //// [moduledecl.ts]
-
 module a {
 }
 
@@ -240,11 +239,11 @@ var m0;
     }
     function f2(ns) {
     }
-    var c1 = (function () {
+    var c1 = /** @class */ (function () {
         function c1() {
         }
         return c1;
-    })();
+    }());
 })(m0 || (m0 = {}));
 var m1;
 (function (m1) {
@@ -254,7 +253,7 @@ var m1;
     function f2(ns) {
     }
     m1.f2 = f2;
-    var c1 = (function () {
+    var c1 = /** @class */ (function () {
         function c1(n, n2, n3, n4) {
             this.n = n;
             this.n2 = n2;
@@ -265,7 +264,7 @@ var m1;
             return "Hello";
         };
         return c1;
-    })();
+    }());
     m1.c1 = c1;
 })(m1 || (m1 = {}));
 var m;
@@ -278,7 +277,6 @@ var m;
     (function (m3) {
     })(m3 = m.m3 || (m.m3 = {}));
 })(m || (m = {}));
-var m;
 (function (m) {
     var m25;
     (function (m25) {
@@ -305,7 +303,7 @@ var m13;
 })(m13 || (m13 = {}));
 var exportTests;
 (function (exportTests) {
-    var C1_public = (function () {
+    var C1_public = /** @class */ (function () {
         function C1_public() {
         }
         C1_public.prototype.f2 = function () {
@@ -315,9 +313,9 @@ var exportTests;
             return "string";
         };
         return C1_public;
-    })();
+    }());
     exportTests.C1_public = C1_public;
-    var C2_private = (function () {
+    var C2_private = /** @class */ (function () {
         function C2_private() {
         }
         C2_private.prototype.f2 = function () {
@@ -327,8 +325,8 @@ var exportTests;
             return "string";
         };
         return C2_private;
-    })();
-    var C3_public = (function () {
+    }());
+    var C3_public = /** @class */ (function () {
         function C3_public() {
         }
         C3_public.prototype.getC2_private = function () {
@@ -356,7 +354,7 @@ var exportTests;
             configurable: true
         });
         return C3_public;
-    })();
+    }());
     exportTests.C3_public = C3_public;
 })(exportTests || (exportTests = {}));
 function foo() {
@@ -453,16 +451,16 @@ declare module "m3" {
 }
 declare module exportTests {
     class C1_public {
-        private f2();
+        private f2;
         f3(): string;
     }
     class C3_public {
-        private getC2_private();
-        private setC2_private(arg);
-        private c2;
+        private getC2_private;
+        private setC2_private;
+        private readonly c2;
         getC1_public(): C1_public;
         setC1_public(arg: C1_public): void;
-        c1: C1_public;
+        readonly c1: C1_public;
     }
 }
 declare module mAmbient {
@@ -478,7 +476,7 @@ declare module mAmbient {
     enum e {
         x,
         y,
-        z,
+        z
     }
     module m3 {
         class C {
@@ -493,7 +491,7 @@ declare module mAmbient {
         enum e {
             x,
             y,
-            z,
+            z
         }
     }
 }

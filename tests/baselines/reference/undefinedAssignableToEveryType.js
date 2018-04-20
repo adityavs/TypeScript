@@ -43,11 +43,11 @@ function foo<T, U, V extends Date>(x: T, y: U, z: V) {
 //}
 
 //// [undefinedAssignableToEveryType.js]
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 var ac;
 var ai;
 var E;
@@ -83,4 +83,4 @@ function foo(x, y, z) {
 //    x = undefined;
 //    y = undefined;
 //    z = undefined;
-//} 
+//}

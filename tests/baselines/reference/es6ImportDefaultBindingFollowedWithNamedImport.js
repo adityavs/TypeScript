@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/es6ImportDefaultBindingFollowedWithNamedImport.ts] ////
 
 //// [es6ImportDefaultBindingFollowedWithNamedImport_0.ts]
-
 export var a = 10;
 export var x = a;
 export var m = a;
@@ -23,21 +22,25 @@ var x1: number = m;
 
 
 //// [es6ImportDefaultBindingFollowedWithNamedImport_0.js]
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.a = 10;
 exports.x = exports.a;
 exports.m = exports.a;
 exports.default = {};
 //// [es6ImportDefaultBindingFollowedWithNamedImport_1.js]
-var es6ImportDefaultBindingFollowedWithNamedImport_0_1 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const es6ImportDefaultBindingFollowedWithNamedImport_0_1 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
 var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_1.a;
-var es6ImportDefaultBindingFollowedWithNamedImport_0_2 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
+const es6ImportDefaultBindingFollowedWithNamedImport_0_2 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
 var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_2.a;
-var es6ImportDefaultBindingFollowedWithNamedImport_0_3 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
+const es6ImportDefaultBindingFollowedWithNamedImport_0_3 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
 var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_3.x;
 var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_3.a;
-var es6ImportDefaultBindingFollowedWithNamedImport_0_4 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
+const es6ImportDefaultBindingFollowedWithNamedImport_0_4 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
 var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_4.x;
-var es6ImportDefaultBindingFollowedWithNamedImport_0_5 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
+const es6ImportDefaultBindingFollowedWithNamedImport_0_5 = require("./es6ImportDefaultBindingFollowedWithNamedImport_0");
 var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_5.m;
 
 
@@ -45,6 +48,7 @@ var x1 = es6ImportDefaultBindingFollowedWithNamedImport_0_5.m;
 export declare var a: number;
 export declare var x: number;
 export declare var m: number;
-declare var _default: {};
+declare const _default: {};
 export default _default;
 //// [es6ImportDefaultBindingFollowedWithNamedImport_1.d.ts]
+export {};

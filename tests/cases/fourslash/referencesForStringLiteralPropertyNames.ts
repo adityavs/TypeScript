@@ -1,16 +1,13 @@
 /// <reference path='fourslash.ts'/>
 
 ////class Foo {
-////    public /*1*/"ss": any;
+////    public "[|{| "isWriteAccess": true, "isDefinition": true |}ss|]": any;
 ////}
 ////
 ////var x: Foo;
-////x.ss;
-////x[/*2*/"ss"];
-////x = { "ss": 0 };
-////x = { /*3*/ss: 0 };
+////x.[|ss|];
+////x["[|ss|]"];
+////x = { "[|{| "isWriteAccess": true, "isDefinition": true |}ss|]": 0 };
+////x = { [|{| "isWriteAccess": true, "isDefinition": true |}ss|]: 0 };
 
-test.markers().forEach((m) => {
-    goTo.position(m.position, m.fileName);
-    verify.referencesCountIs(5);
-});
+verify.singleReferenceGroup('(property) Foo["ss"]: any');

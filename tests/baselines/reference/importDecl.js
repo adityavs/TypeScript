@@ -82,46 +82,58 @@ export var useMultiImport_m4_f4 = multiImport_m4.foo();
 
 
 //// [importDecl_require.js]
-var d = (function () {
+"use strict";
+exports.__esModule = true;
+var d = /** @class */ (function () {
     function d() {
     }
     return d;
-})();
+}());
 exports.d = d;
 function foo() { return null; }
 exports.foo = foo;
 //// [importDecl_require1.js]
-var d = (function () {
+"use strict";
+exports.__esModule = true;
+var d = /** @class */ (function () {
     function d() {
     }
     return d;
-})();
+}());
 exports.d = d;
 var x;
 function foo() { return null; }
 exports.foo = foo;
 //// [importDecl_require2.js]
-var d = (function () {
+"use strict";
+exports.__esModule = true;
+var d = /** @class */ (function () {
     function d() {
     }
     return d;
-})();
+}());
 exports.d = d;
 function foo() { return null; }
 exports.foo = foo;
 //// [importDecl_require3.js]
-var d = (function () {
+"use strict";
+exports.__esModule = true;
+var d = /** @class */ (function () {
     function d() {
     }
     return d;
-})();
+}());
 exports.d = d;
 function foo() { return null; }
 exports.foo = foo;
 //// [importDecl_require4.js]
+"use strict";
+exports.__esModule = true;
 function foo2() { return null; }
 exports.foo2 = foo2;
 //// [importDecl_1.js]
+"use strict";
+exports.__esModule = true;
 ///<reference path='importDecl_require.ts'/>
 ///<reference path='importDecl_require1.ts'/>
 ///<reference path='importDecl_require2.ts'/>

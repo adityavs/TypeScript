@@ -1,5 +1,4 @@
 //// [stringLiteralTypesTypePredicates01.ts]
-
 type Kind = "A" | "B"
 
 function kindIs(kind: Kind, is: "A"): kind is "A";
@@ -8,7 +7,7 @@ function kindIs(kind: Kind, is: Kind): boolean {
     return kind === is;
 }
 
-var x: Kind = "A";
+var x: Kind = undefined;
 
 if (kindIs(x, "A")) {
     let a = x;
@@ -28,7 +27,7 @@ else {
 function kindIs(kind, is) {
     return kind === is;
 }
-var x = "A";
+var x = undefined;
 if (kindIs(x, "A")) {
     var a = x;
 }

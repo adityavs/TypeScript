@@ -10,12 +10,14 @@ function foo() {
 
 
 //// [a.js]
-define("tests/cases/compiler/a", ["require", "exports"], function (require, exports) {
-    var c = (function () {
+define("a", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
+    var c = /** @class */ (function () {
         function c() {
         }
         return c;
-    })();
+    }());
     exports.c = c;
 });
 function foo() {

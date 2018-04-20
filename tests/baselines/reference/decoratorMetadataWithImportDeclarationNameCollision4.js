@@ -24,28 +24,33 @@ export {MyClass};
 
 
 //// [db.js]
-var db = (function () {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var db = /** @class */ (function () {
     function db() {
     }
     db.prototype.doSomething = function () {
     };
     return db;
-})();
+}());
 exports.db = db;
 //// [service.js]
-var db_1 = require('./db'); // error no default export
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var db_1 = require("./db"); // error no default export
 function someDecorator(target) {
     return target;
 }
-var MyClass = (function () {
+var MyClass = /** @class */ (function () {
     function MyClass(db) {
         this.db = db;
         this.db.doSomething();
     }
     MyClass = __decorate([
-        someDecorator, 
-        __metadata('design:paramtypes', [Object])
+        someDecorator,
+        __metadata("design:paramtypes", [typeof (_a = (typeof db_1.default !== "undefined" && db_1.default).db) === "function" && _a || Object])
     ], MyClass);
     return MyClass;
-})();
+    var _a;
+}());
 exports.MyClass = MyClass;

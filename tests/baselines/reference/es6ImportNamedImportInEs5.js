@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/es6ImportNamedImportInEs5.ts] ////
 
 //// [es6ImportNamedImportInEs5_0.ts]
-
 export var a = 10;
 export var x = a;
 export var m = a;
@@ -42,6 +41,8 @@ import { aaaa as bbbb } from "./es6ImportNamedImportInEs5_0";
 
 
 //// [es6ImportNamedImportInEs5_0.js]
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.a = 10;
 exports.x = exports.a;
 exports.m = exports.a;
@@ -51,6 +52,8 @@ exports.z1 = 10;
 exports.z2 = 10;
 exports.aaaa = 10;
 //// [es6ImportNamedImportInEs5_1.js]
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var es6ImportNamedImportInEs5_0_1 = require("./es6ImportNamedImportInEs5_0");
 var xxxx = es6ImportNamedImportInEs5_0_1.a;
 var es6ImportNamedImportInEs5_0_2 = require("./es6ImportNamedImportInEs5_0");
@@ -84,3 +87,4 @@ export declare var z1: number;
 export declare var z2: number;
 export declare var aaaa: number;
 //// [es6ImportNamedImportInEs5_1.d.ts]
+export {};

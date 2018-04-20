@@ -1,5 +1,4 @@
 //// [capturedLetConstInLoop4.ts]
-
 //======let
 export function exportedFoo() {
     return v0 + v00 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8;
@@ -144,8 +143,9 @@ for (const y = 0; y < 1;) {
 
 
 //// [capturedLetConstInLoop4.js]
-System.register([], function(exports_1) {
-    var v0, v00, v1, v2, v3, v4, v5, v6, v7, v8, v0_c, v00_c, v1_c, v2_c, v3_c, v4_c, v5_c, v6_c, v7_c, v8_c;
+System.register([], function (exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     //======let
     function exportedFoo() {
         return v0 + v00 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8;
@@ -156,10 +156,11 @@ System.register([], function(exports_1) {
         return v0_c + v00_c + v1_c + v2_c + v3_c + v4_c + v5_c + v6_c + v7_c + v8_c;
     }
     exports_1("exportedFoo2", exportedFoo2);
+    var v0, v00, v1, v2, v3, v4, v5, v6, v7, v8, v0_c, v00_c, v1_c, v2_c, v3_c, v4_c, v5_c, v6_c, v7_c, v8_c;
     return {
-        setters:[],
-        execute: function() {
-            var _loop_1 = function(x) {
+        setters: [],
+        execute: function () {
+            var _loop_1 = function (x) {
                 v0 = x;
                 (function () { return x + v0; });
                 (function () { return x; });
@@ -168,7 +169,7 @@ System.register([], function(exports_1) {
                 var x = _a[_i];
                 _loop_1(x);
             }
-            var _loop_2 = function(x) {
+            var _loop_2 = function (x) {
                 v00 = x;
                 (function () { return x + v00; });
                 (function () { return x; });
@@ -176,7 +177,7 @@ System.register([], function(exports_1) {
             for (var x in []) {
                 _loop_2(x);
             }
-            var _loop_3 = function(x) {
+            var _loop_3 = function (x) {
                 v1 = x;
                 (function () { return x + v1; });
                 (function () { return x; });
@@ -184,8 +185,8 @@ System.register([], function(exports_1) {
             for (var x = 0; x < 1; ++x) {
                 _loop_3(x);
             }
-            var _loop_4 = function() {
-                var x = void 0;
+            var _loop_4 = function () {
+                var x;
                 v2 = x;
                 (function () { return x + v2; });
                 (function () { return x; });
@@ -193,8 +194,8 @@ System.register([], function(exports_1) {
             while (1 === 1) {
                 _loop_4();
             }
-            var _loop_5 = function() {
-                var x = void 0;
+            var _loop_5 = function () {
+                var x;
                 v3 = x;
                 (function () { return x + v3; });
                 (function () { return x; });
@@ -202,7 +203,7 @@ System.register([], function(exports_1) {
             do {
                 _loop_5();
             } while (1 === 1);
-            var _loop_6 = function(y) {
+            var _loop_6 = function (y) {
                 var x = 1;
                 v4 = x;
                 (function () { return x + v4; });
@@ -211,7 +212,7 @@ System.register([], function(exports_1) {
             for (var y = 0; y < 1; ++y) {
                 _loop_6(y);
             }
-            var _loop_7 = function(x, y) {
+            var _loop_7 = function (x, y) {
                 v5 = x;
                 (function () { return x + y + v5; });
                 (function () { return x + y; });
@@ -219,8 +220,8 @@ System.register([], function(exports_1) {
             for (var x = 0, y = 1; x < 1; ++x) {
                 _loop_7(x, y);
             }
-            var _loop_8 = function() {
-                var x = void 0, y = void 0;
+            var _loop_8 = function () {
+                var x, y;
                 v6 = x;
                 (function () { return x + y + v6; });
                 (function () { return x + y; });
@@ -228,8 +229,8 @@ System.register([], function(exports_1) {
             while (1 === 1) {
                 _loop_8();
             }
-            var _loop_9 = function() {
-                var x = void 0, y = void 0;
+            var _loop_9 = function () {
+                var x, y;
                 v7 = x;
                 (function () { return x + y + v7; });
                 (function () { return x + y; });
@@ -237,7 +238,7 @@ System.register([], function(exports_1) {
             do {
                 _loop_9();
             } while (1 === 1);
-            var _loop_10 = function(y) {
+            var _loop_10 = function (y) {
                 var x = 1;
                 v8 = x;
                 (function () { return x + y + v8; });
@@ -246,7 +247,7 @@ System.register([], function(exports_1) {
             for (var y = 0; y < 1; ++y) {
                 _loop_10(y);
             }
-            var _loop_11 = function(x) {
+            var _loop_11 = function (x) {
                 v0_c = x;
                 (function () { return x + v0_c; });
                 (function () { return x; });
@@ -255,7 +256,7 @@ System.register([], function(exports_1) {
                 var x = _c[_b];
                 _loop_11(x);
             }
-            var _loop_12 = function(x) {
+            var _loop_12 = function (x) {
                 v00_c = x;
                 (function () { return x + v00; });
                 (function () { return x; });
@@ -263,7 +264,7 @@ System.register([], function(exports_1) {
             for (var x in []) {
                 _loop_12(x);
             }
-            var _loop_13 = function(x) {
+            var _loop_13 = function (x) {
                 v1_c = x;
                 (function () { return x + v1_c; });
                 (function () { return x; });
@@ -271,7 +272,7 @@ System.register([], function(exports_1) {
             for (var x = 0; x < 1;) {
                 _loop_13(x);
             }
-            var _loop_14 = function() {
+            var _loop_14 = function () {
                 var x = 1;
                 v2_c = x;
                 (function () { return x + v2_c; });
@@ -280,7 +281,7 @@ System.register([], function(exports_1) {
             while (1 === 1) {
                 _loop_14();
             }
-            var _loop_15 = function() {
+            var _loop_15 = function () {
                 var x = 1;
                 v3_c = x;
                 (function () { return x + v3_c; });
@@ -289,7 +290,7 @@ System.register([], function(exports_1) {
             do {
                 _loop_15();
             } while (1 === 1);
-            var _loop_16 = function(y) {
+            var _loop_16 = function (y) {
                 var x = 1;
                 v4_c = x;
                 (function () { return x + v4_c; });
@@ -298,7 +299,7 @@ System.register([], function(exports_1) {
             for (var y = 0; y < 1;) {
                 _loop_16(y);
             }
-            var _loop_17 = function(x, y) {
+            var _loop_17 = function (x, y) {
                 v5_c = x;
                 (function () { return x + y + v5_c; });
                 (function () { return x + y; });
@@ -306,7 +307,7 @@ System.register([], function(exports_1) {
             for (var x = 0, y = 1; x < 1;) {
                 _loop_17(x, y);
             }
-            var _loop_18 = function() {
+            var _loop_18 = function () {
                 var x = 1, y = 1;
                 v6_c = x;
                 (function () { return x + y + v6_c; });
@@ -315,7 +316,7 @@ System.register([], function(exports_1) {
             while (1 === 1) {
                 _loop_18();
             }
-            var _loop_19 = function() {
+            var _loop_19 = function () {
                 var x = 1, y = 1;
                 v7_c = x;
                 (function () { return x + y + v7_c; });
@@ -324,7 +325,7 @@ System.register([], function(exports_1) {
             do {
                 _loop_19();
             } while (1 === 1);
-            var _loop_20 = function(y) {
+            var _loop_20 = function (y) {
                 var x = 1;
                 v8_c = x;
                 (function () { return x + y + v8_c; });
@@ -334,5 +335,5 @@ System.register([], function(exports_1) {
                 _loop_20(y);
             }
         }
-    }
+    };
 });

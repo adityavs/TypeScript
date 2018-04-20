@@ -11,7 +11,7 @@ let Foo = class {
 }
 
 //// [functionsInClassExpressions.js]
-var Foo = (function () {
+var Foo = /** @class */ (function () {
     function class_1() {
         var _this = this;
         this.bar = 0;
@@ -22,4 +22,4 @@ var Foo = (function () {
     }
     class_1.prototype.m = function () { return this.bar; };
     return class_1;
-})();
+}());

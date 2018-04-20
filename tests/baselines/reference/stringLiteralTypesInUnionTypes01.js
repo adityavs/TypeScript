@@ -1,9 +1,8 @@
 //// [stringLiteralTypesInUnionTypes01.ts]
-
 type T = "foo" | "bar" | "baz";
 
-var x: "foo" | "bar" | "baz" = "foo";
-var y: T = "bar";
+var x: "foo" | "bar" | "baz" = undefined;
+var y: T = undefined;
 
 if (x === "foo") {
     let a = x;
@@ -21,8 +20,8 @@ x = y;
 y = x;
 
 //// [stringLiteralTypesInUnionTypes01.js]
-var x = "foo";
-var y = "bar";
+var x = undefined;
+var y = undefined;
 if (x === "foo") {
     var a = x;
 }

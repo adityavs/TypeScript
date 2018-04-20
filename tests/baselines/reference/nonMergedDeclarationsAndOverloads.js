@@ -9,11 +9,11 @@ class A {
 }
 
 //// [nonMergedDeclarationsAndOverloads.js]
-var A = (function () {
+var A = /** @class */ (function () {
     function A() {
     }
     A.prototype.f = function () { };
     A.prototype.m1 = function (a) {
     };
     return A;
-})();
+}());

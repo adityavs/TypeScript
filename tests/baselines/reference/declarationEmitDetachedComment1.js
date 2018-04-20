@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/declarationEmitDetachedComment1.ts] ////
 
 //// [test1.ts]
-
 /*! Copyright 2015 MyCompany Inc. */
 
 /**
@@ -37,31 +36,31 @@ class Hola {
 /**
  * Hello class
  */
-var Hello = (function () {
+var Hello = /** @class */ (function () {
     function Hello() {
     }
     return Hello;
-})();
+}());
 //// [test2.js]
 /* A comment at the top of the file. */
 /**
  * Hi class
  */
-var Hi = (function () {
+var Hi = /** @class */ (function () {
     function Hi() {
     }
     return Hi;
-})();
+}());
 //// [test3.js]
 // A one-line comment at the top of the file.
 /**
  * Hola class
  */
-var Hola = (function () {
+var Hola = /** @class */ (function () {
     function Hola() {
     }
     return Hola;
-})();
+}());
 
 
 //// [test1.d.ts]

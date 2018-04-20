@@ -5,16 +5,17 @@ var symbol = Symbol.for('myThing');
 >Symbol.for : (key: string) => symbol
 >Symbol : SymbolConstructor
 >for : (key: string) => symbol
->'myThing' : string
+>'myThing' : "myThing"
 
 class Foo {
 >Foo : Foo
 
     [symbol]() {
+>[symbol] : () => number
 >symbol : symbol
 
         return 0;
->0 : number
+>0 : 0
     }
 }
 
@@ -23,6 +24,7 @@ class Bar extends Foo {
 >Foo : Foo
 
     [symbol]() {
+>[symbol] : () => any
 >symbol : symbol
 
         return super[symbol]();

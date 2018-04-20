@@ -12,13 +12,17 @@ export var x: typeof a;
 
 
 //// [importDeclarationUsedAsTypeQuery_require.js]
-var B = (function () {
+"use strict";
+exports.__esModule = true;
+var B = /** @class */ (function () {
     function B() {
     }
     return B;
-})();
+}());
 exports.B = B;
 //// [importDeclarationUsedAsTypeQuery_1.js]
+"use strict";
+exports.__esModule = true;
 
 
 //// [importDeclarationUsedAsTypeQuery_require.d.ts]

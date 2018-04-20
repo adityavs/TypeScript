@@ -36,13 +36,18 @@ if (typeof boolOrC === "Object") {
 else {
     var r4: boolean = boolOrC; // boolean
 }
-
-// Narrowing occurs only if target type is a subtype of variable type
-if (typeof strOrNumOrBool === "Object") {
-    var q1: string | number | boolean = strOrNumOrBool; // string | number | boolean
+if (typeof strOrC === "Object" as string) { // comparison is OK with cast
+    c = strOrC; // error: but no narrowing to C
 }
 else {
-    var q2: string | number | boolean = strOrNumOrBool; // string | number | boolean
+    var r5: string = strOrC; // error: no narrowing to string
+}
+
+if (typeof strOrNumOrBool === "Object") {
+    let q1: {} = strOrNumOrBool; // {}
+}
+else {
+    let q2: string | number | boolean = strOrNumOrBool; // string | number | boolean
 }
 
 // A type guard of the form typeof x !== s, where s is a string literal,
@@ -67,10 +72,9 @@ else {
     c = boolOrC; // C
 }
 
-// Narrowing occurs only if target type is a subtype of variable type
 if (typeof strOrNumOrBool !== "Object") {
-    var q1: string | number | boolean = strOrNumOrBool; // string | number | boolean
+    let q1: string | number | boolean = strOrNumOrBool; // string | number | boolean
 }
 else {
-    var q2: string | number | boolean = strOrNumOrBool; // string | number | boolean
+    let q2: {} = strOrNumOrBool; // {}
 }

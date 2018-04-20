@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/es6ImportDefaultBindingFollowedWithNamespaceBindingDts.ts] ////
 
 //// [server.ts]
-
 export class a { }
 
 //// [client.ts]
@@ -9,14 +8,18 @@ import defaultBinding, * as nameSpaceBinding  from "./server";
 export var x = new nameSpaceBinding.a();
 
 //// [server.js]
-var a = (function () {
+"use strict";
+exports.__esModule = true;
+var a = /** @class */ (function () {
     function a() {
     }
     return a;
-})();
+}());
 exports.a = a;
 //// [client.js]
-var server_1 = require("./server"), nameSpaceBinding = server_1;
+"use strict";
+exports.__esModule = true;
+var nameSpaceBinding = require("./server");
 exports.x = new nameSpaceBinding.a();
 
 

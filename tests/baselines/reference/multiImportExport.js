@@ -26,24 +26,30 @@ class Adder {
 export = Adder;
 
 //// [Adder.js]
-var Adder = (function () {
+"use strict";
+var Adder = /** @class */ (function () {
     function Adder() {
     }
     Adder.prototype.add = function (a, b) {
     };
     return Adder;
-})();
+}());
 module.exports = Adder;
 //// [Math.js]
-var Adder = require('./Adder');
+"use strict";
+var Adder = require("./Adder");
 var Math = {
     Adder: Adder
 };
 module.exports = Math;
 //// [Drawing.js]
-exports.Math = require('./Math/Math');
+"use strict";
+exports.__esModule = true;
+exports.Math = require("./Math/Math");
 //// [consumer.js]
-var Drawing = require('./Drawing');
+"use strict";
+exports.__esModule = true;
+var Drawing = require("./Drawing");
 var addr = new Drawing.Math.Adder();
 
 
@@ -61,3 +67,4 @@ export = Math;
 //// [Drawing.d.ts]
 export import Math = require('./Math/Math');
 //// [consumer.d.ts]
+export {};

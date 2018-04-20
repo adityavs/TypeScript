@@ -2,11 +2,12 @@
 declare module JSX {
 >JSX : Symbol(JSX, Decl(file.tsx, 0, 0))
 
-	interface Element { }
+	interface Element { something; }
 >Element : Symbol(Element, Decl(file.tsx, 0, 20))
+>something : Symbol(Element.something, Decl(file.tsx, 1, 20))
 
 	interface IntrinsicElements { }
->IntrinsicElements : Symbol(IntrinsicElements, Decl(file.tsx, 1, 22))
+>IntrinsicElements : Symbol(IntrinsicElements, Decl(file.tsx, 1, 33))
 }
 
 interface Obj1 {
@@ -63,5 +64,5 @@ var Obj3: Obj3;
 
 <Obj3 x={42} />; // OK
 >Obj3 : Symbol(Obj3, Decl(file.tsx, 17, 9), Decl(file.tsx, 23, 3))
->x : Symbol(unknown)
+>x : Symbol(x, Decl(file.tsx, 24, 5))
 

@@ -19,13 +19,16 @@ var zz: Foo;
 zz.x;
 
 //// [exportAssignClassAndModule_0.js]
-var Foo = (function () {
+"use strict";
+var Foo = /** @class */ (function () {
     function Foo() {
     }
     return Foo;
-})();
+}());
 module.exports = Foo;
 //// [exportAssignClassAndModule_1.js]
+"use strict";
+exports.__esModule = true;
 var z;
 var zz;
 zz.x;

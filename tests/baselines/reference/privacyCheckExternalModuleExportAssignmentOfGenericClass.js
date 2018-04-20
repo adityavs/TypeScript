@@ -14,14 +14,17 @@ interface Bar {
 }
 
 //// [privacyCheckExternalModuleExportAssignmentOfGenericClass_0.js]
-var Foo = (function () {
+"use strict";
+var Foo = /** @class */ (function () {
     function Foo(a) {
         this.a = a;
     }
     return Foo;
-})();
+}());
 module.exports = Foo;
 //// [privacyCheckExternalModuleExportAssignmentOfGenericClass_1.js]
+"use strict";
+exports.__esModule = true;
 
 
 //// [privacyCheckExternalModuleExportAssignmentOfGenericClass_0.d.ts]

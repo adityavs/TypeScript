@@ -1,5 +1,4 @@
 //// [giant.ts]
-
 /*
     Prefixes
     p -> public
@@ -683,6 +682,8 @@ export declare module eaM {
 
 //// [giant.js]
 define(["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
     /*
         Prefixes
         p -> public
@@ -699,7 +700,7 @@ define(["require", "exports"], function (require, exports) {
     var V;
     function F() { }
     ;
-    var C = (function () {
+    var C = /** @class */ (function () {
         function C() {
         }
         C.prototype.pF = function () { };
@@ -742,13 +743,13 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return C;
-    })();
+    }());
     var M;
     (function (M_1) {
         var V;
         function F() { }
         ;
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             C.prototype.pF = function () { };
@@ -791,28 +792,28 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return C;
-        })();
+        }());
         var M;
         (function (M) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             M.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             M.eC = eC;
             ;
             ;
@@ -824,7 +825,7 @@ define(["require", "exports"], function (require, exports) {
         function eF() { }
         M_1.eF = eF;
         ;
-        var eC = (function () {
+        var eC = /** @class */ (function () {
             function eC() {
             }
             eC.prototype.pF = function () { };
@@ -867,29 +868,29 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return eC;
-        })();
+        }());
         M_1.eC = eC;
         var eM;
         (function (eM) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             eM.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             eM.eC = eC;
             ;
             ;
@@ -903,7 +904,7 @@ define(["require", "exports"], function (require, exports) {
     function eF() { }
     exports.eF = eF;
     ;
-    var eC = (function () {
+    var eC = /** @class */ (function () {
         function eC() {
         }
         eC.prototype.pF = function () { };
@@ -946,14 +947,14 @@ define(["require", "exports"], function (require, exports) {
             configurable: true
         });
         return eC;
-    })();
+    }());
     exports.eC = eC;
     var eM;
     (function (eM_1) {
         var V;
         function F() { }
         ;
-        var C = (function () {
+        var C = /** @class */ (function () {
             function C() {
             }
             C.prototype.pF = function () { };
@@ -996,28 +997,28 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return C;
-        })();
+        }());
         var M;
         (function (M) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             M.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             M.eC = eC;
             ;
             ;
@@ -1029,7 +1030,7 @@ define(["require", "exports"], function (require, exports) {
         function eF() { }
         eM_1.eF = eF;
         ;
-        var eC = (function () {
+        var eC = /** @class */ (function () {
             function eC() {
             }
             eC.prototype.pF = function () { };
@@ -1072,29 +1073,29 @@ define(["require", "exports"], function (require, exports) {
                 configurable: true
             });
             return eC;
-        })();
+        }());
         eM_1.eC = eC;
         var eM;
         (function (eM) {
             var V;
             function F() { }
             ;
-            var C = (function () {
+            var C = /** @class */ (function () {
                 function C() {
                 }
                 return C;
-            })();
+            }());
             ;
             ;
             ;
             function eF() { }
             eM.eF = eF;
             ;
-            var eC = (function () {
+            var eC = /** @class */ (function () {
                 function eC() {
                 }
                 return eC;
-            })();
+            }());
             eM.eC = eC;
             ;
             ;
@@ -1117,21 +1118,21 @@ export declare class eC {
     pV: any;
     private rV;
     pF(): void;
-    private rF();
+    private rF;
     pgF(): void;
-    pgF: any;
+    readonly pgF: any;
     psF(param: any): void;
     psF: any;
-    private rgF();
     private rgF;
-    private rsF(param);
+    private readonly rgF;
+    private rsF;
     private rsF;
     static tV: any;
     static tF(): void;
     static tsF(param: any): void;
     static tsF: any;
     static tgF(): void;
-    static tgF: any;
+    static readonly tgF: any;
 }
 export interface eI {
     (): any;
@@ -1169,21 +1170,21 @@ export declare module eM {
         pV: any;
         private rV;
         pF(): void;
-        private rF();
+        private rF;
         pgF(): void;
-        pgF: any;
+        readonly pgF: any;
         psF(param: any): void;
         psF: any;
-        private rgF();
         private rgF;
-        private rsF(param);
+        private readonly rgF;
+        private rsF;
         private rsF;
         static tV: any;
         static tF(): void;
         static tsF(param: any): void;
         static tsF: any;
         static tgF(): void;
-        static tgF: any;
+        static readonly tgF: any;
     }
     interface eI {
         (): any;
@@ -1220,14 +1221,12 @@ export declare module eM {
         }
         interface eI {
         }
-        module eM {
-        }
+        module eM { }
         var eaV: any;
         function eaF(): void;
         class eaC {
         }
-        module eaM {
-        }
+        module eaM { }
     }
     var eaV: any;
     function eaF(): void;
@@ -1236,21 +1235,21 @@ export declare module eM {
         pV: any;
         private rV;
         pF(): void;
-        private rF();
+        private rF;
         pgF(): void;
-        pgF: any;
+        readonly pgF: any;
         psF(param: any): void;
         psF: any;
-        private rgF();
         private rgF;
-        private rsF(param);
+        private readonly rgF;
+        private rsF;
         private rsF;
         static tV: any;
         static tF(): void;
         static tsF(param: any): void;
         static tsF: any;
         static tgF(): void;
-        static tgF: any;
+        static readonly tgF: any;
     }
     module eaM {
         var V: any;
@@ -1259,16 +1258,14 @@ export declare module eM {
         }
         interface I {
         }
-        module M {
-        }
+        module M { }
         var eV: any;
         function eF(): void;
         class eC {
         }
         interface eI {
         }
-        module eM {
-        }
+        module eM { }
     }
 }
 export declare var eaV: any;
@@ -1278,21 +1275,21 @@ export declare class eaC {
     pV: any;
     private rV;
     pF(): void;
-    private rF();
+    private rF;
     pgF(): void;
-    pgF: any;
+    readonly pgF: any;
     psF(param: any): void;
     psF: any;
-    private rgF();
     private rgF;
-    private rsF(param);
+    private readonly rgF;
+    private rsF;
     private rsF;
     static tV: any;
     static tF(): void;
     static tsF(param: any): void;
     static tsF: any;
     static tgF(): void;
-    static tgF: any;
+    static readonly tgF: any;
 }
 export declare module eaM {
     var V: any;
@@ -1339,22 +1336,19 @@ export declare module eaM {
         }
         interface I {
         }
-        module M {
-        }
+        module M { }
         var eV: any;
         function eF(): void;
         class eC {
         }
         interface eI {
         }
-        module eM {
-        }
+        module eM { }
         var eaV: any;
         function eaF(): void;
         class eaC {
         }
-        module eaM {
-        }
+        module eaM { }
     }
     var eV: any;
     function eF(): void;
@@ -1399,15 +1393,13 @@ export declare module eaM {
         function F(): void;
         class C {
         }
-        module M {
-        }
+        module M { }
         var eV: any;
         function eF(): void;
         class eC {
         }
         interface eI {
         }
-        module eM {
-        }
+        module eM { }
     }
 }

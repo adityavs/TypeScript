@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/declFileImportModuleWithExportAssignment.ts] ////
 
 //// [declFileImportModuleWithExportAssignment_0.ts]
-
 module m2 {
     export interface connectModule {
         (res, req, next): void;
@@ -27,9 +26,12 @@ a.test1(null, null, null);
 
 
 //// [declFileImportModuleWithExportAssignment_0.js]
+"use strict";
 var m2;
 module.exports = m2;
 //// [declFileImportModuleWithExportAssignment_1.js]
+"use strict";
+exports.__esModule = true;
 /**This is on import declaration*/
 var a1 = require("./declFileImportModuleWithExportAssignment_0");
 exports.a = a1;

@@ -1,59 +1,58 @@
 === tests/cases/compiler/downlevelLetConst18.ts ===
-
 'use strict'
 
 for (let x; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 3, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 2, 8))
 
     function foo() { x };
->foo : Symbol(foo, Decl(downlevelLetConst18.ts, 3, 16))
->x : Symbol(x, Decl(downlevelLetConst18.ts, 3, 8))
+>foo : Symbol(foo, Decl(downlevelLetConst18.ts, 2, 16))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 2, 8))
 }
 
 for (let x; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 7, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 6, 8))
 
     function foo1() { x };
->foo1 : Symbol(foo1, Decl(downlevelLetConst18.ts, 7, 16))
->x : Symbol(x, Decl(downlevelLetConst18.ts, 7, 8))
+>foo1 : Symbol(foo1, Decl(downlevelLetConst18.ts, 6, 16))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 6, 8))
 }
 
 for (let x; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 11, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 10, 8))
 
     (() => { x })();
->x : Symbol(x, Decl(downlevelLetConst18.ts, 11, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 10, 8))
 }
 
 for (const x = 1; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 15, 10))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 14, 10))
 
     (() => { x })();
->x : Symbol(x, Decl(downlevelLetConst18.ts, 15, 10))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 14, 10))
 }
 
 for (let x; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 19, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 18, 8))
 
     ({ foo() { x }})
->foo : Symbol(foo, Decl(downlevelLetConst18.ts, 20, 6))
->x : Symbol(x, Decl(downlevelLetConst18.ts, 19, 8))
+>foo : Symbol(foo, Decl(downlevelLetConst18.ts, 19, 6))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 18, 8))
 }
 
 for (let x; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 23, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 22, 8))
 
     ({ get foo() { return x } })
->foo : Symbol(foo, Decl(downlevelLetConst18.ts, 24, 6))
->x : Symbol(x, Decl(downlevelLetConst18.ts, 23, 8))
+>foo : Symbol(foo, Decl(downlevelLetConst18.ts, 23, 6))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 22, 8))
 }
 
 for (let x; ;) {
->x : Symbol(x, Decl(downlevelLetConst18.ts, 27, 8))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 26, 8))
 
     ({ set foo(v) { x } })
->foo : Symbol(foo, Decl(downlevelLetConst18.ts, 28, 6))
->v : Symbol(v, Decl(downlevelLetConst18.ts, 28, 15))
->x : Symbol(x, Decl(downlevelLetConst18.ts, 27, 8))
+>foo : Symbol(foo, Decl(downlevelLetConst18.ts, 27, 6))
+>v : Symbol(v, Decl(downlevelLetConst18.ts, 27, 15))
+>x : Symbol(x, Decl(downlevelLetConst18.ts, 26, 8))
 }
 

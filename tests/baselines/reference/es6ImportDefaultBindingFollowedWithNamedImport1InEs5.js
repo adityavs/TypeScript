@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/es6ImportDefaultBindingFollowedWithNamedImport1InEs5.ts] ////
 
 //// [es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0.ts]
-
 var a = 10;
 export default a;
 
@@ -21,10 +20,13 @@ var x: number = defaultBinding6;
 
 
 //// [es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0.js]
-var a = 10;
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var a = 10;
 exports.default = a;
 //// [es6ImportDefaultBindingFollowedWithNamedImport1InEs5_1.js]
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0_1 = require("./es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0");
 var x = es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0_1.default;
 var es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0_2 = require("./es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0");
@@ -43,3 +45,4 @@ var x = es6ImportDefaultBindingFollowedWithNamedImport1InEs5_0_6.default;
 declare var a: number;
 export default a;
 //// [es6ImportDefaultBindingFollowedWithNamedImport1InEs5_1.d.ts]
+export {};

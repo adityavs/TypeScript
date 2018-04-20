@@ -1,5 +1,4 @@
 === tests/cases/compiler/file1.ts ===
-
 c;
 >c : Symbol(c, Decl(file2.ts, 0, 5))
 

@@ -1,14 +1,13 @@
 error TS5055: Cannot write file 'tests/cases/compiler/a.js' because it would overwrite input file.
-tests/cases/compiler/a.js(3,6): error TS1223: 'type' tag already specified.
+  Adding a tsconfig.json file will help organize projects that contain both TypeScript and JavaScript files. Learn more at https://aka.ms/tsconfig.
 
 
 !!! error TS5055: Cannot write file 'tests/cases/compiler/a.js' because it would overwrite input file.
-==== tests/cases/compiler/a.js (1 errors) ====
+!!! error TS5055:   Adding a tsconfig.json file will help organize projects that contain both TypeScript and JavaScript files. Learn more at https://aka.ms/tsconfig.
+==== tests/cases/compiler/a.js (0 errors) ====
     /**
       * @type {number}
       * @type {string}
-         ~~~~
-!!! error TS1223: 'type' tag already specified.
       */
     var v;
     

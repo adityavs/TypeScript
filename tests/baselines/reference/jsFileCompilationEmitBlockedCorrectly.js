@@ -16,8 +16,8 @@ function foo() {
 
 //// [b.js]
 // this should be emitted
-var d = (function () {
+var d = /** @class */ (function () {
     function d() {
     }
     return d;
-})();
+}());

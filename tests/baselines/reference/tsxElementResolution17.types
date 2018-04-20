@@ -9,11 +9,11 @@ import s2 = require('elements2');
 
 <s1.MyElement />;
 ><s1.MyElement /> : JSX.Element
->s1 : any
->MyElement : any
+>s1.MyElement : typeof s1.MyElement
+>s1 : typeof s1
+>MyElement : typeof s1.MyElement
 
 === tests/cases/conformance/jsx/file.tsx ===
-
 declare module JSX {
 >JSX : any
 
@@ -25,6 +25,8 @@ declare module JSX {
 }
 
 declare module 'elements1' {
+>'elements1' : typeof 'elements1'
+
 	class MyElement {
 >MyElement : MyElement
 
@@ -32,6 +34,8 @@ declare module 'elements1' {
 }
 
 declare module 'elements2' {
+>'elements2' : typeof 'elements2'
+
 	class MyElement {
 >MyElement : MyElement
 

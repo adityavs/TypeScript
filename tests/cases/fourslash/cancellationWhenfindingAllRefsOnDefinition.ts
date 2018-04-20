@@ -7,7 +7,7 @@
 ////
 ////    }
 ////
-////    public /*1*/start(){
+////    public /**/[|{| "isWriteAccess": true, "isDefinition": true |}start|](){
 ////        return this;
 ////    }
 ////
@@ -17,22 +17,21 @@
 ////}
 
 //@Filename: findAllRefsOnDefinition.ts
-////import Second = require("findAllRefsOnDefinition-import");
+////import Second = require("./findAllRefsOnDefinition-import");
 ////
 ////var second = new Second.Test()
-////second.start();
+////second.[|start|]();
 ////second.stop();
 
-goTo.file("findAllRefsOnDefinition-import.ts");
-goTo.marker("1");
-
-verify.referencesCountIs(2);
+checkRefs();
 
 cancellation.setCancelled();
-goTo.marker("1");
-verifyOperationIsCancelled(() => verify.referencesCountIs(0) );
+verifyOperationIsCancelled(checkRefs);
 
 // verify that internal state is still correct
 cancellation.resetCancelled();
-goTo.marker("1");           
-verify.referencesCountIs(2);
+checkRefs();
+
+function checkRefs() {
+    verify.singleReferenceGroup("(method) Test.start(): this");
+}

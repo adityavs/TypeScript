@@ -1,5 +1,4 @@
 //// [file1.ts]
-
 class C {
     /*! remove pinned comment anywhere else */
     public foo(x: string, y: any)
@@ -17,5 +16,5 @@ var C = (function () {
     }
     C.prototype.foo = function (x, y) { };
     return C;
-})();
+}());
 var x = 10;

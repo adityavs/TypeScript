@@ -4,8 +4,12 @@
 ////export class a{}
 
 //@Filename: quickInfoForRequire_input.ts
-////import a = require("AA/B/*1*/B");
+////import a = require("./AA/B/*1*/B");
+////import b = require(`./AA/B/*2*/B`);
 
-goTo.marker('1');
-verify.quickInfoIs('module a');
-verify.referencesCountIs(0);
+
+goTo.marker("1");
+verify.quickInfoIs("module a");
+
+goTo.marker("2");
+verify.quickInfoIs("module a");

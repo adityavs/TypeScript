@@ -6,10 +6,11 @@ export class Foo {}
 //// [modulePrologueAMD.js]
 define(["require", "exports"], function (require, exports) {
     "use strict";
-    var Foo = (function () {
+    exports.__esModule = true;
+    var Foo = /** @class */ (function () {
         function Foo() {
         }
         return Foo;
-    })();
+    }());
     exports.Foo = Foo;
 });

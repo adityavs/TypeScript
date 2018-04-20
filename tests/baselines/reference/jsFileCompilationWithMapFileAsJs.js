@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/jsFileCompilationWithMapFileAsJs.ts] ////
 
 //// [a.ts]
-
 class c {
 }
 
@@ -14,9 +13,9 @@ function bar() {
 }
 
 //// [a.js]
-var c = (function () {
+var c = /** @class */ (function () {
     function c() {
     }
     return c;
-})();
+}());
 //# sourceMappingURL=a.js.map

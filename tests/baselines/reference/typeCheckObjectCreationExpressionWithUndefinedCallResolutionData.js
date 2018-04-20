@@ -12,16 +12,21 @@ f.foo();
 
 
 //// [file1.js]
+"use strict";
+exports.__esModule = true;
 function foo() {
     var classes = undefined;
     return new classes(null);
 }
 exports.foo = foo;
 //// [file2.js]
-var f = require('./file1');
+"use strict";
+exports.__esModule = true;
+var f = require("./file1");
 f.foo();
 
 
 //// [file1.d.ts]
 export declare function foo(): any;
 //// [file2.d.ts]
+export {};

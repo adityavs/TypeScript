@@ -1,6 +1,6 @@
 /// <reference path='fourslash.ts'/>
 
-////function [|f|]() {
+////function [|{| "isWriteAccess": true, "isDefinition": true |}f|]() {
 ////    return 100;
 ////}
 ////
@@ -10,16 +10,8 @@
 ////
 ////var y = [|f|]();
 ////
-////namespace [|f|] {
+////namespace [|{| "isWriteAccess": true, "isDefinition": true |}f|] {
 ////    var local = 100;
 ////}
 
-let ranges = test.ranges()
-for (let range of ranges) {
-    goTo.position(range.start);
-
-    verify.referencesCountIs(ranges.length);
-    for (let expectedReference of ranges) {
-        verify.referencesAtPositionContains(expectedReference);
-    }
-}
+verify.singleReferenceGroup("namespace f\nfunction f(): number");

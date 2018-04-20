@@ -3,7 +3,7 @@ class JQueryElement {
 >JQueryElement : Symbol(JQueryElement, Decl(indexerA.ts, 0, 0))
 
     id:string;
->id : Symbol(id, Decl(indexerA.ts, 0, 21))
+>id : Symbol(JQueryElement.id, Decl(indexerA.ts, 0, 21))
 }
 
 class JQuery {
@@ -17,7 +17,9 @@ class JQuery {
 var jq:JQuery={ 0: { id : "a" }, 1: { id : "b" } };
 >jq : Symbol(jq, Decl(indexerA.ts, 8, 3))
 >JQuery : Symbol(JQuery, Decl(indexerA.ts, 2, 1))
+>0 : Symbol(0, Decl(indexerA.ts, 8, 15))
 >id : Symbol(id, Decl(indexerA.ts, 8, 20))
+>1 : Symbol(1, Decl(indexerA.ts, 8, 32))
 >id : Symbol(id, Decl(indexerA.ts, 8, 37))
 
 jq[0].id;

@@ -1,12 +1,12 @@
 /// <reference path="./fourslash.ts" />
 
 ////interface IFoo {
-////    [|a|]: string;
+////    [|{| "isWriteAccess": true, "isDefinition": true |}a|]: string;
 ////}
 ////class C<T extends IFoo> {
 ////    method() {
 ////        var x: T = {
-////            [|a|]: ""
+////            [|{| "isWriteAccess": true, "isDefinition": true |}a|]: ""
 ////        };
 ////        x.[|a|];
 ////    }
@@ -14,15 +14,7 @@
 ////
 ////
 ////var x: IFoo = {
-////    [|a|]: "ss"
+////    [|{| "isWriteAccess": true, "isDefinition": true |}a|]: "ss"
 ////};
 
-let ranges = test.ranges()
-for (let range of ranges) {
-    goTo.position(range.start);
-
-    verify.referencesCountIs(ranges.length);
-    for (let expectedReference of ranges) {
-        verify.referencesAtPositionContains(expectedReference);
-    }
-}
+verify.singleReferenceGroup("(property) IFoo.a: string");

@@ -1,5 +1,4 @@
 === tests/cases/compiler/capturedLetConstInLoop5_ES6.ts ===
-
 declare function use(a: any);
 >use : (a: any) => any
 >a : any
@@ -34,7 +33,7 @@ function foo0(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
             return;
         }
@@ -51,31 +50,31 @@ function foo00(x) {
 >x : any
 
     for (let x in []) {
->x : any
+>x : string
 >[] : undefined[]
 
         var v = x;
->v : any
->x : any
+>v : string
+>x : string
 
         (function() { return x + v });
->(function() { return x + v }) : () => any
->function() { return x + v } : () => any
->x + v : any
->x : any
->v : any
+>(function() { return x + v }) : () => string
+>function() { return x + v } : () => string
+>x + v : string
+>x : string
+>v : string
 
         (() => x + v);
->(() => x + v) : () => any
->() => x + v : () => any
->x + v : any
->x : any
->v : any
+>(() => x + v) : () => string
+>() => x + v : () => string
+>x + v : string
+>x : string
+>v : string
 
-        if (x == 1) {
->x == 1 : boolean
->x : any
->1 : number
+        if (x == "1") {
+>x == "1" : boolean
+>x : string
+>"1" : "1"
 
             return;
         }
@@ -84,7 +83,7 @@ function foo00(x) {
     use(v);
 >use(v) : any
 >use : (a: any) => any
->v : any
+>v : string
 }
 
 function foo1(x) {
@@ -93,10 +92,10 @@ function foo1(x) {
 
     for (let x = 0; x < 1; ++x) {
 >x : number
->0 : number
+>0 : 0
 >x < 1 : boolean
 >x : number
->1 : number
+>1 : 1
 >++x : number
 >x : number
 
@@ -121,7 +120,7 @@ function foo1(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
             return;
         }
@@ -139,12 +138,12 @@ function foo2(x) {
 
     while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
         let x = 1;
 >x : number
->1 : number
+>1 : 1
 
         var v = x;
 >v : number
@@ -167,7 +166,7 @@ function foo2(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
             return;
         }
@@ -207,14 +206,14 @@ function foo3(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
             return;
         }
     } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
     
     use(v);
 >use(v) : any
@@ -228,10 +227,10 @@ function foo4(x) {
 
     for (let y = 0; y < 1; ++y) {
 >y : number
->0 : number
+>0 : 0
 >y < 1 : boolean
 >y : number
->1 : number
+>1 : 1
 >++y : number
 >y : number
 
@@ -241,7 +240,7 @@ function foo4(x) {
 
         let x = 1;
 >x : number
->1 : number
+>1 : 1
 
         (function() { return x + v });
 >(function() { return x + v }) : () => number
@@ -260,7 +259,7 @@ function foo4(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
             return;
         }
@@ -278,12 +277,12 @@ function foo5(x) {
 
     for (let x = 0, y = 1; x < 1; ++x) {
 >x : number
->0 : number
+>0 : 0
 >y : number
->1 : number
+>1 : 1
 >x < 1 : boolean
 >x : number
->1 : number
+>1 : 1
 >++x : number
 >x : number
 
@@ -312,7 +311,7 @@ function foo5(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
             return;
         }
@@ -331,8 +330,8 @@ function foo6(x) {
 
     while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
         let x, y;
 >x : any
@@ -363,7 +362,7 @@ function foo6(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
             return;
         }
@@ -409,14 +408,14 @@ function foo7(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
             return;
         }
     } while (1 === 1);
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
     
     use(v);
 >use(v) : any
@@ -431,16 +430,16 @@ function foo8(x) {
 
     for (let y = 0; y < 1; ++y) {
 >y : number
->0 : number
+>0 : 0
 >y < 1 : boolean
 >y : number
->1 : number
+>1 : 1
 >++y : number
 >y : number
 
         let x = 1;
 >x : number
->1 : number
+>1 : 1
 
         var v = x;
 >v : number
@@ -467,7 +466,7 @@ function foo8(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
             return;
         }
@@ -509,7 +508,7 @@ function foo0_c(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
             return;
         }
@@ -526,31 +525,31 @@ function foo00_c(x) {
 >x : any
 
     for (const x in []) {
->x : any
+>x : string
 >[] : undefined[]
 
         var v = x;
->v : any
->x : any
+>v : string
+>x : string
 
         (function() { return x + v });
->(function() { return x + v }) : () => any
->function() { return x + v } : () => any
->x + v : any
->x : any
->v : any
+>(function() { return x + v }) : () => string
+>function() { return x + v } : () => string
+>x + v : string
+>x : string
+>v : string
 
         (() => x + v);
->(() => x + v) : () => any
->() => x + v : () => any
->x + v : any
->x : any
->v : any
+>(() => x + v) : () => string
+>() => x + v : () => string
+>x + v : string
+>x : string
+>v : string
 
-        if (x == 1) {
->x == 1 : boolean
->x : any
->1 : number
+        if (x == "1") {
+>x == "1" : boolean
+>x : string
+>"1" : "1"
 
             return;
         }
@@ -559,7 +558,7 @@ function foo00_c(x) {
     use(v);
 >use(v) : any
 >use : (a: any) => any
->v : any
+>v : string
 }
 
 function foo1_c(x) {
@@ -567,34 +566,34 @@ function foo1_c(x) {
 >x : any
 
     for (const x = 0; x < 1;) {
->x : number
->0 : number
+>x : 0
+>0 : 0
 >x < 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
         var v = x;
 >v : number
->x : number
+>x : 0
 
         (function() { return x + v });
 >(function() { return x + v }) : () => number
 >function() { return x + v } : () => number
 >x + v : number
->x : number
+>x : 0
 >v : number
 
         (() => x + v);
 >(() => x + v) : () => number
 >() => x + v : () => number
 >x + v : number
->x : number
+>x : 0
 >v : number
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
             return;
         }
@@ -612,35 +611,35 @@ function foo2_c(x) {
 
     while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
         const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         var v = x;
 >v : number
->x : number
+>x : 1
 
         (function() { return x + v });
 >(function() { return x + v }) : () => number
 >function() { return x + v } : () => number
 >x + v : number
->x : number
+>x : 1
 >v : number
 
         (() => x + v);
 >(() => x + v) : () => number
 >() => x + v : () => number
 >x + v : number
->x : number
+>x : 1
 >v : number
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
             return;
         }
@@ -658,8 +657,8 @@ function foo3_c(x) {
 
     do {
         const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         var v;
 >v : any
@@ -668,27 +667,27 @@ function foo3_c(x) {
 >(function() { return x + v }) : () => any
 >function() { return x + v } : () => any
 >x + v : any
->x : number
+>x : 1
 >v : any
 
         (() => x + v);
 >(() => x + v) : () => any
 >() => x + v : () => any
 >x + v : any
->x : number
+>x : 1
 >v : any
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
             return;
         }
     } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
     
     use(v);
 >use(v) : any
@@ -701,19 +700,19 @@ function foo4_c(x) {
 >x : any
 
     for (const y = 0; y < 1;) {
->y : number
->0 : number
+>y : 0
+>0 : 0
 >y < 1 : boolean
->y : number
->1 : number
+>y : 0
+>1 : 1
 
         var v = y;
 >v : number
->y : number
+>y : 0
 
         let x = 1;
 >x : number
->1 : number
+>1 : 1
 
         (function() { return x + v });
 >(function() { return x + v }) : () => number
@@ -732,7 +731,7 @@ function foo4_c(x) {
         if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
             return;
         }
@@ -749,25 +748,25 @@ function foo5_c(x) {
 >x : any
 
     for (const x = 0, y = 1; x < 1;) {
->x : number
->0 : number
->y : number
->1 : number
+>x : 0
+>0 : 0
+>y : 1
+>1 : 1
 >x < 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
         var v = x;
 >v : number
->x : number
+>x : 0
 
         (function() { return x + y + v });
 >(function() { return x + y + v }) : () => number
 >function() { return x + y + v } : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 0
+>y : 1
 >v : number
 
         (() => x + y + v);
@@ -775,14 +774,14 @@ function foo5_c(x) {
 >() => x + y + v : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 0
+>y : 1
 >v : number
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
             return;
         }
@@ -801,26 +800,26 @@ function foo6_c(x) {
 
     while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
         const x = 1, y = 1;
->x : number
->1 : number
->y : number
->1 : number
+>x : 1
+>1 : 1
+>y : 1
+>1 : 1
 
         var v = x;
 >v : number
->x : number
+>x : 1
 
         (function() { return x + y + v });
 >(function() { return x + y + v }) : () => number
 >function() { return x + y + v } : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 >v : number
 
         (() => x + y + v);
@@ -828,14 +827,14 @@ function foo6_c(x) {
 >() => x + y + v : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 >v : number
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
             return;
         }
@@ -853,22 +852,22 @@ function foo7_c(x) {
 
     do {
         const x = 1, y = 1;
->x : number
->1 : number
->y : number
->1 : number
+>x : 1
+>1 : 1
+>y : 1
+>1 : 1
 
         var v = x;
 >v : number
->x : number
+>x : 1
 
         (function() { return x + y + v });
 >(function() { return x + y + v }) : () => number
 >function() { return x + y + v } : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 >v : number
 
         (() => x + y + v);
@@ -876,21 +875,21 @@ function foo7_c(x) {
 >() => x + y + v : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 >v : number
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
             return;
         }
     } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
     
     use(v);
 >use(v) : any
@@ -904,27 +903,27 @@ function foo8_c(x) {
 >x : any
 
     for (const y = 0; y < 1;) {
->y : number
->0 : number
+>y : 0
+>0 : 0
 >y < 1 : boolean
->y : number
->1 : number
+>y : 0
+>1 : 1
 
         const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         var v = x;
 >v : number
->x : number
+>x : 1
 
         (function() { return x + y + v });
 >(function() { return x + y + v }) : () => number
 >function() { return x + y + v } : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 0
 >v : number
 
         (() => x + y + v);
@@ -932,14 +931,14 @@ function foo8_c(x) {
 >() => x + y + v : () => number
 >x + y + v : number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 0
 >v : number
 
         if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
             return;
         }

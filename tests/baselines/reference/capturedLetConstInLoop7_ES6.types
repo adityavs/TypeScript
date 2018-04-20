@@ -20,14 +20,14 @@ for (let x of []) {
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break l0;
 >l0 : any
@@ -35,14 +35,14 @@ for (let x of []) {
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue l0;
 >l0 : any
@@ -53,45 +53,45 @@ l00:
 >l00 : any
 
 for (let x in []) {
->x : any
+>x : string
 >[] : undefined[]
 
     (function() { return x});
->(function() { return x}) : () => any
->function() { return x} : () => any
->x : any
+>(function() { return x}) : () => string
+>function() { return x} : () => string
+>x : string
 
     (() => x);
->(() => x) : () => any
->() => x : () => any
->x : any
+>(() => x) : () => string
+>() => x : () => string
+>x : string
 
-    if (x == 1) {
->x == 1 : boolean
->x : any
->1 : number
+    if (x == "1") {
+>x == "1" : boolean
+>x : string
+>"1" : "1"
 
         break;
     }
-    if (x == 1) {
->x == 1 : boolean
->x : any
->1 : number
+    if (x == "1") {
+>x == "1" : boolean
+>x : string
+>"1" : "1"
 
         break l00;
 >l00 : any
     }
-    if (x == 2) {
->x == 2 : boolean
->x : any
->2 : number
+    if (x == "2") {
+>x == "2" : boolean
+>x : string
+>"2" : "2"
 
         continue;
     }
-    if (x == 2) {
->x == 2 : boolean
->x : any
->2 : number
+    if (x == "2") {
+>x == "2" : boolean
+>x : string
+>"2" : "2"
 
         continue l00;
 >l00 : any
@@ -103,10 +103,10 @@ l1:
 
 for (let x = 0; x < 1; ++x) {
 >x : number
->0 : number
+>0 : 0
 >x < 1 : boolean
 >x : number
->1 : number
+>1 : 1
 >++x : number
 >x : number
 
@@ -123,14 +123,14 @@ for (let x = 0; x < 1; ++x) {
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break l1;
 >l1 : any
@@ -138,14 +138,14 @@ for (let x = 0; x < 1; ++x) {
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue l1;
 >l1 : any
@@ -157,8 +157,8 @@ l2:
 
 while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
     let x;
 >x : any
@@ -176,14 +176,14 @@ while (1 === 1) {
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break l2;
 >l2 : any
@@ -191,14 +191,14 @@ while (1 === 1) {
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue l2;
 >l2 : any
@@ -225,14 +225,14 @@ do {
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break l3;
 >l3 : any
@@ -240,38 +240,38 @@ do {
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue l3;
 >l3 : any
     }
 } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
 l4:
 >l4 : any
 
 for (let y = 0; y < 1; ++y) {
 >y : number
->0 : number
+>0 : 0
 >y < 1 : boolean
 >y : number
->1 : number
+>1 : 1
 >++y : number
 >y : number
 
     let x = 1;
 >x : number
->1 : number
+>1 : 1
 
     (function() { return x});
 >(function() { return x}) : () => number
@@ -286,14 +286,14 @@ for (let y = 0; y < 1; ++y) {
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break l4;
 >l4 : any
@@ -301,14 +301,14 @@ for (let y = 0; y < 1; ++y) {
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue l4;
 >l4 : any
@@ -320,12 +320,12 @@ l5:
 
 for (let x = 0, y = 1; x < 1; ++x) {
 >x : number
->0 : number
+>0 : 0
 >y : number
->1 : number
+>1 : 1
 >x < 1 : boolean
 >x : number
->1 : number
+>1 : 1
 >++x : number
 >x : number
 
@@ -346,14 +346,14 @@ for (let x = 0, y = 1; x < 1; ++x) {
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break l5;
 >l5 : any
@@ -361,14 +361,14 @@ for (let x = 0, y = 1; x < 1; ++x) {
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue l5;
 >l5 : any
@@ -380,8 +380,8 @@ l6:
 
 while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
     let x, y;
 >x : any
@@ -404,14 +404,14 @@ while (1 === 1) {
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break l6;
 >l6 : any
@@ -419,14 +419,14 @@ while (1 === 1) {
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue l6;
 >l6 : any
@@ -459,14 +459,14 @@ do {
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break l7;
 >l7 : any
@@ -474,38 +474,38 @@ do {
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue l7;
 >l7 : any
     }
 } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
 l8:
 >l8 : any
 
 for (let y = 0; y < 1; ++y) {
 >y : number
->0 : number
+>0 : 0
 >y < 1 : boolean
 >y : number
->1 : number
+>1 : 1
 >++y : number
 >y : number
 
     let x = 1;
 >x : number
->1 : number
+>1 : 1
 
     (function() { return x + y});
 >(function() { return x + y}) : () => number
@@ -524,14 +524,14 @@ for (let y = 0; y < 1; ++y) {
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : number
->1 : number
+>1 : 1
 
         break l8;
 >l8 : any
@@ -539,14 +539,14 @@ for (let y = 0; y < 1; ++y) {
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : number
->2 : number
+>2 : 2
 
         continue l8;
 >l8 : any
@@ -574,14 +574,14 @@ for (const x of []) {
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
 >x : any
->1 : number
+>1 : 1
 
         break l0_c;
 >l0_c : any
@@ -589,14 +589,14 @@ for (const x of []) {
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
 >x : any
->2 : number
+>2 : 2
 
         continue l0_c;
 >l0_c : any
@@ -607,45 +607,45 @@ l00_c:
 >l00_c : any
 
 for (const x in []) {
->x : any
+>x : string
 >[] : undefined[]
 
     (function() { return x});
->(function() { return x}) : () => any
->function() { return x} : () => any
->x : any
+>(function() { return x}) : () => string
+>function() { return x} : () => string
+>x : string
 
     (() => x);
->(() => x) : () => any
->() => x : () => any
->x : any
+>(() => x) : () => string
+>() => x : () => string
+>x : string
 
-    if (x == 1) {
->x == 1 : boolean
->x : any
->1 : number
+    if (x == "1") {
+>x == "1" : boolean
+>x : string
+>"1" : "1"
 
         break;
     }
-    if (x == 1) {
->x == 1 : boolean
->x : any
->1 : number
+    if (x == "1") {
+>x == "1" : boolean
+>x : string
+>"1" : "1"
 
         break l00_c;
 >l00_c : any
     }
-    if (x == 2) {
->x == 2 : boolean
->x : any
->2 : number
+    if (x == "2") {
+>x == "2" : boolean
+>x : string
+>"2" : "2"
 
         continue;
     }
-    if (x == 2) {
->x == 2 : boolean
->x : any
->2 : number
+    if (x == "2") {
+>x == "2" : boolean
+>x : string
+>"2" : "2"
 
         continue l00_c;
 >l00_c : any
@@ -656,48 +656,48 @@ l1_c:
 >l1_c : any
 
 for (const x = 0; x < 1;) {
->x : number
->0 : number
+>x : 0
+>0 : 0
 >x < 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
     (function() { return x});
 >(function() { return x}) : () => number
 >function() { return x} : () => number
->x : number
+>x : 0
 
     (() => x);
 >(() => x) : () => number
 >() => x : () => number
->x : number
+>x : 0
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
         break l1_c;
 >l1_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : 0
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : 0
+>2 : 2
 
         continue l1_c;
 >l1_c : any
@@ -709,49 +709,49 @@ l2_c:
 
 while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
     const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
     (function() { return x});
 >(function() { return x}) : () => number
 >function() { return x} : () => number
->x : number
+>x : 1
 
     (() => x);
 >(() => x) : () => number
 >() => x : () => number
->x : number
+>x : 1
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : never
+>1 : 1
 
         break l2_c;
 >l2_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue l2_c;
 >l2_c : any
@@ -763,104 +763,104 @@ l3_c:
 
 do {
     const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
     (function() { return x});
 >(function() { return x}) : () => number
 >function() { return x} : () => number
->x : number
+>x : 1
 
     (() => x);
 >(() => x) : () => number
 >() => x : () => number
->x : number
+>x : 1
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : never
+>1 : 1
 
         break l3_c;
 >l3_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue l3_c;
 >l3_c : any
     }
 } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
 l4_c:
 >l4_c : any
 
 for (const y = 0; y < 1;) {
->y : number
->0 : number
+>y : 0
+>0 : 0
 >y < 1 : boolean
->y : number
->1 : number
+>y : 0
+>1 : 1
 
     const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
     (function() { return x});
 >(function() { return x}) : () => number
 >function() { return x} : () => number
->x : number
+>x : 1
 
     (() => x);
 >(() => x) : () => number
 >() => x : () => number
->x : number
+>x : 1
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : never
+>1 : 1
 
         break l4_c;
 >l4_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue l4_c;
 >l4_c : any
@@ -871,54 +871,54 @@ l5_c:
 >l5_c : any
 
 for (const x = 0, y = 1; x < 1;) {
->x : number
->0 : number
->y : number
->1 : number
+>x : 0
+>0 : 0
+>y : 1
+>1 : 1
 >x < 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
     (function() { return x + y});
 >(function() { return x + y}) : () => number
 >function() { return x + y} : () => number
 >x + y : number
->x : number
->y : number
+>x : 0
+>y : 1
 
     (() => x + y);
 >(() => x + y) : () => number
 >() => x + y : () => number
 >x + y : number
->x : number
->y : number
+>x : 0
+>y : 1
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 0
+>1 : 1
 
         break l5_c;
 >l5_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : 0
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : 0
+>2 : 2
 
         continue l5_c;
 >l5_c : any
@@ -930,55 +930,55 @@ l6_c:
 
 while (1 === 1) {
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
     const x = 1, y = 1;
->x : number
->1 : number
->y : number
->1 : number
+>x : 1
+>1 : 1
+>y : 1
+>1 : 1
 
     (function() { return x + y});
 >(function() { return x + y}) : () => number
 >function() { return x + y} : () => number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 
     (() => x + y);
 >(() => x + y) : () => number
 >() => x + y : () => number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : never
+>1 : 1
 
         break l6_c;
 >l6_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue l6_c;
 >l6_c : any
@@ -991,114 +991,114 @@ l7_c:
 
 do {
     const x = 1, y = 1;
->x : number
->1 : number
->y : number
->1 : number
+>x : 1
+>1 : 1
+>y : 1
+>1 : 1
 
     (function() { return x + y});
 >(function() { return x + y}) : () => number
 >function() { return x + y} : () => number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 
     (() => x + y);
 >(() => x + y) : () => number
 >() => x + y : () => number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 1
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : never
+>1 : 1
 
         break l7_c;
 >l7_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue l7_c;
 >l7_c : any
     }
 } while (1 === 1)
 >1 === 1 : boolean
->1 : number
->1 : number
+>1 : 1
+>1 : 1
 
 l8_c:
 >l8_c : any
 
 for (const y = 0; y < 1;) {
->y : number
->0 : number
+>y : 0
+>0 : 0
 >y < 1 : boolean
->y : number
->1 : number
+>y : 0
+>1 : 1
 
     const x = 1;
->x : number
->1 : number
+>x : 1
+>1 : 1
 
     (function() { return x + y});
 >(function() { return x + y}) : () => number
 >function() { return x + y} : () => number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 0
 
     (() => x + y);
 >(() => x + y) : () => number
 >() => x + y : () => number
 >x + y : number
->x : number
->y : number
+>x : 1
+>y : 0
 
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : 1
+>1 : 1
 
         break;
     }
     if (x == 1) {
 >x == 1 : boolean
->x : number
->1 : number
+>x : never
+>1 : 1
 
         break l8_c;
 >l8_c : any
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue;
     }
     if (x == 2) {
 >x == 2 : boolean
->x : number
->2 : number
+>x : never
+>2 : 2
 
         continue l8_c;
 >l8_c : any

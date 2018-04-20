@@ -20,7 +20,7 @@ class C {
 var s;
 var n;
 var a;
-var C = (function () {
+var C = /** @class */ (function () {
     function C() {
     }
     Object.defineProperty(C.prototype, s, {
@@ -48,6 +48,16 @@ var C = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(C, "", {
+        set: function (v) { },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(C.prototype, 0, {
+        get: function () { return 0; },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(C.prototype, a, {
         set: function (v) { },
         enumerable: true,
@@ -69,4 +79,4 @@ var C = (function () {
         configurable: true
     });
     return C;
-})();
+}());

@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/declarationFileOverwriteError.ts] ////
 
 //// [a.d.ts]
-
 declare class c {
 }
 
@@ -10,8 +9,8 @@ class d {
 }
 
 //// [a.js]
-var d = (function () {
+var d = /** @class */ (function () {
     function d() {
     }
     return d;
-})();
+}());

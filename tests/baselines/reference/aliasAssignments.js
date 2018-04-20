@@ -14,13 +14,17 @@ y = moduleA; // should be error
 
 
 //// [aliasAssignments_moduleA.js]
-var someClass = (function () {
+"use strict";
+exports.__esModule = true;
+var someClass = /** @class */ (function () {
     function someClass() {
     }
     return someClass;
-})();
+}());
 exports.someClass = someClass;
 //// [aliasAssignments_1.js]
+"use strict";
+exports.__esModule = true;
 var moduleA = require("./aliasAssignments_moduleA");
 var x = moduleA;
 x = 1; // Should be error

@@ -1,5 +1,4 @@
 //// [exportNonInitializedVariablesUMD.ts]
-
 var;
 let;
 const;
@@ -36,21 +35,24 @@ export let h1: D = new D;
 
 //// [exportNonInitializedVariablesUMD.js]
 (function (factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
     }
-    else if (typeof define === 'function' && define.amd) {
+    else if (typeof define === "function" && define.amd) {
         define(["require", "exports"], factory);
     }
 })(function (require, exports) {
+    "use strict";
+    exports.__esModule = true;
     var ;
     let;
     var ;
-    var A = (function () {
+    var A = /** @class */ (function () {
         function A() {
         }
         return A;
-    })();
+    }());
     var B;
     (function (B) {
         B.a = 1, B.c = 2;
@@ -64,11 +66,11 @@ export let h1: D = new D;
     exports.b1 = 1;
     exports.c1 = 'a';
     exports.d1 = 1;
-    var D = (function () {
+    var D = /** @class */ (function () {
         function D() {
         }
         return D;
-    })();
+    }());
     exports.e1 = new D;
     exports.f1 = new D;
     exports.g1 = new D;

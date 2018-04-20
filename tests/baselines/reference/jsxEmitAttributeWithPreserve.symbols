@@ -1,8 +1,7 @@
 === tests/cases/compiler/jsxEmitAttributeWithPreserve.tsx ===
-
 declare var React: any;
->React : Symbol(React, Decl(jsxEmitAttributeWithPreserve.tsx, 1, 11))
+>React : Symbol(React, Decl(jsxEmitAttributeWithPreserve.tsx, 0, 11))
 
 <foo data/>
->data : Symbol(unknown)
+>data : Symbol(data, Decl(jsxEmitAttributeWithPreserve.tsx, 1, 4))
 

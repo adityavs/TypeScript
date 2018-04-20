@@ -1,7 +1,6 @@
 //// [tests/cases/compiler/externalModuleExportingGenericClass.ts] ////
 
 //// [externalModuleExportingGenericClass_file0.ts]
-
 class C<T> {
     foo: T;
 }
@@ -16,14 +15,17 @@ var v3: number = (new a<number>()).foo;
 
 
 //// [externalModuleExportingGenericClass_file0.js]
-var C = (function () {
+"use strict";
+var C = /** @class */ (function () {
     function C() {
     }
     return C;
-})();
+}());
 module.exports = C;
 //// [externalModuleExportingGenericClass_file1.js]
-var a = require('./externalModuleExportingGenericClass_file0');
+"use strict";
+exports.__esModule = true;
+var a = require("./externalModuleExportingGenericClass_file0");
 var v; // this should report error
 var v2 = (new a()).foo;
 var v3 = (new a()).foo;
